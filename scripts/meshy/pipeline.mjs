@@ -39,6 +39,7 @@ export function saveState(root, state) {
 export function planWork({ root, objects, state, limit = 1, force = false }) {
   let created = 0;
   return objects.map((o) => {
+    if (o.method === 'flat') return { id: o.id, views: [], ignored: 0, action: 'skip', reason: 'flat item, built locally (npm run flat)' };
     const all = listViews(root, o.id);
     const views = all.slice(0, 4);
     const base = { id: o.id, views, ignored: all.length - views.length };
@@ -51,6 +52,13 @@ export function planWork({ root, objects, state, limit = 1, force = false }) {
     created++;
     return { ...base, action: 'create' };
   });
+}
+
+// Refuse to start when the account cannot cover every new task in this run.
+export function assertBudget(balance, newTasks) {
+  const needed = newTasks * CREDITS_TEXTURED;
+  if (balance < needed) throw new Error(`Need ${needed} credits for ${newTasks} new task(s) but the account has ${balance}. Lower --limit or top up.`);
+  return needed;
 }
 
 async function createWithRetry(ctx, payload) {

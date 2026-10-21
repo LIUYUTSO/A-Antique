@@ -5,7 +5,7 @@ import { mkdtempSync, mkdirSync, writeFileSync, existsSync, readFileSync } from 
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createClient, buildPayload } from './client.mjs';
-import { planWork, processObject, runAll, loadState } from './pipeline.mjs';
+import { planWork, processObject, runAll, loadState, assertBudget } from './pipeline.mjs';
 
 // A fake Meshy: POST creates a task, GET walks PENDING → IN_PROGRESS → SUCCEEDED (or FAILED).
 function startMock({ failIds = [], busyOnce = false } = {}) {
@@ -170,4 +170,16 @@ test('runAll processes several objects and keeps going when one fails', async ()
     assert.equal(results.filter((r) => r.ok).length, 1);
     assert.equal(results.filter((r) => !r.ok).length, 1);
   } finally { server.close(); }
+});
+
+test('flat objects never go to Meshy, even with photos', () => {
+  const root = makeRoot(['010', '012']);
+  const plan = planWork({ root, objects: [{ id: '010', method: 'flat' }, { id: '012', method: 'meshy' }], state: {}, limit: Infinity });
+  assert.deepEqual(plan.map((p) => p.action), ['skip', 'create']);
+  assert.match(plan[0].reason, /flat/);
+});
+
+test('assertBudget refuses a run the balance cannot cover', () => {
+  assert.equal(assertBudget(774, 17), 510);
+  assert.throws(() => assertBudget(774, 26), /Need 780 credits.*has 774/);
 });

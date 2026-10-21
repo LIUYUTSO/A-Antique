@@ -264,14 +264,14 @@ footer { border-top: 1px solid var(--fg); padding-top: 20px; line-height: 2; }
     <dl class="kv">
       <dt>Direction</dt><dd>A — Index (the shelf) and Spread (one object).</dd>
       <dt>Pose</dt><dd>Top-down for every still.</dd>
-      <dt>3D</dt><dd>All 26 objects, generated with Meshy.</dd>
+      <dt>3D</dt><dd>All 26 objects. 17 through Meshy, 9 flat items (paper, booklets, cards, a disc) built locally.</dd>
       <dt>Plate</dt><dd>Light grey, #F3F3F3.</dd>
       <dt>Paragraphs</dt><dd>Sentence case. Labels, titles and numbers stay all caps.</dd>
       <dt>Face</dt><dd>JetBrains Mono.</dd>
       <dt>Motion</dt><dd>Transforms on. expo.out, 900ms.</dd>
       <dt>Image</dt><dd>Native colour.</dd>
     </dl>
-    <p class="note">[NOTE] 一個技術事實,提醒一次:Meshy 的 image-to-3D 吃 1 到 4 張同一物件的不同角度,第一張是正面主視角。只有俯視一張,模型會很差。所以每件的拍攝組是「1 張俯視定裝照(給網站)+ 3 張不同角度(給 Meshy)」,共約 26 × 4 = 104 張。</p>
+    <p class="note">[NOTE] 一個技術事實,提醒一次:Meshy 的 image-to-3D 吃 1 到 4 張同一物件的不同角度,第一張是正面主視角。只有俯視一張,模型會很差。所以 Meshy 的 17 件每件拍「1 張俯視定裝照(給網站)+ 4 張不同角度(給 Meshy)」,平面的 9 件只要正面加選用的背面,共約 100 張。</p>
   </div>
 </section>
 
@@ -281,10 +281,11 @@ footer { border-top: 1px solid var(--fg); padding-top: 20px; line-height: 2; }
     <dl class="kv">
       <dt>Input</dt><dd>shoot/&lt;id&gt;/views/ — 1 to 4 photos, sorted by file name, first one is the front.</dd>
       <dt>Request</dt><dd>POST /openapi/v1/multi-image-to-3d, meshy-7.1, textured, PBR on, GLB only.</dd>
-      <dt>Cost</dt><dd>30 credits per object with textures. 26 objects = 780 credits. Failed tasks are refunded.</dd>
+      <dt>Cost</dt><dd>30 credits per object with textures. 17 Meshy objects = 510 credits, against 774 in the account. Failed tasks are refunded.</dd>
       <dt>Queue</dt><dd>Pro plan allows 10 pending or running tasks at once, shared with the Meshy web app.</dd>
       <dt>Output</dt><dd>GLB → resize textures to 1024, WebP, Draco → R2.</dd>
-      <dt>Guard</dt><dd>One object per run unless you pass a larger limit. Task ids are saved before polling, so a re-run resumes instead of paying twice.</dd>
+      <dt>Flat items</dt><dd>001, 010, 011, 013, 014, 015, 016, 017, 023 become thin slabs built from their photos. Photo on the front, optional back photo, paper tone on the edges. No credits.</dd>
+      <dt>Guard</dt><dd>One object per run unless you pass a larger limit. The run stops if the balance cannot cover it. Task ids are saved before polling, so a re-run resumes instead of paying twice.</dd>
     </dl>
   </div>
 </section>

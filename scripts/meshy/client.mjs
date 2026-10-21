@@ -44,6 +44,7 @@ export function createClient({ apiKey, baseUrl = DEFAULT_BASE, fetchImpl = fetch
     createTask: async (payload) => (await request('POST', ENDPOINT, payload)).result,
     getTask: (id) => request('GET', `${ENDPOINT}/${id}`),
     deleteTask: (id) => request('DELETE', `${ENDPOINT}/${id}`),
+    getBalance: () => request('GET', '/openapi/v1/balance'), // { balance, monthly_credits, permanent_credits, ... }
   };
 }
 
