@@ -27,7 +27,7 @@ Edmonton + Toronto 挖到的 26 件舊物,做成「像展示架」的網頁。La
 - Repo:https://github.com/LIUYUTSO/A-Antique,PR #1(draft,分支 `meshy-pipeline`)。**main 目前只有初始 commit,本檔與 pipeline 都在分支上,新 session 要先切到 `meshy-pipeline` 或先合併 PR #1。**
 - Mood board(Rev. 4):https://claude.ai/artifact/SViKmxjU9FzDE713uYxw22,原始碼 `design/moodboard.html`
 - 盤點清單(共用資料庫,26 件):https://claude.ai/artifact/PCXc3rRWTtpiBQPiTLN8AB。用 Artifact 工具 `ArtifactData`(collection `objects`,doc id `001` 到 `026`)讀寫。
-- A-Brain PR #67(🧽📶):「技術棧寫成固定與可替換矛盾」的訊號。**前提已被 Adam 推翻(他決定維持固定棧),待 Adam 決定關閉或縮小範圍**:https://github.com/LIUYUTSO/A-Brain/pull/67
+- A-Brain PR #67(🧽📶「技術棧寫成固定與可替換矛盾」):**已由 Adam 取消並關閉**(他決定維持固定棧)。正本裡「固定」與「可替換」兩種說法並存仍是事實,但 Adam 沒有要處理。
 - 舊專案 A-Stuff:https://github.com/LIUYUTSO/A-Stuff。裡面**沒有 Meshy**,只有 StableFast3D 本地腳本、`gltf-transform` 壓縮、R2 上傳。
 
 ## 環境變數
