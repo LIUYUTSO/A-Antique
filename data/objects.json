@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "note": "Names are provisional working labels read from the dig photo. Group: P paper, T figures and toys, M metal and tools, K photography, S pins and small things.",
+  "objects": [
+    { "id": "001", "name": "Family First Aid poison guide wheel", "group": "P", "printed": "...K'S DRUG STORE" },
+    { "id": "002", "name": "Black square timer", "group": "M", "printed": "" },
+    { "id": "003", "name": "Painted wooden figure, pink and orange", "group": "T", "printed": "" },
+    { "id": "004", "name": "Painted wooden figure, green hat", "group": "T", "printed": "" },
+    { "id": "005", "name": "Wooden figure, yellow and red", "group": "T", "printed": "" },
+    { "id": "006", "name": "Wooden figure, red bottle shape", "group": "T", "printed": "" },
+    { "id": "007", "name": "Ceramic frog drummer with blue glazed drum", "group": "T", "printed": "" },
+    { "id": "008", "name": "Doll head, chipped paint", "group": "T", "printed": "" },
+    { "id": "009", "name": "Marbles card", "group": "T", "printed": "MURMELN BILLES MARBLES KNIKKERS" },
+    { "id": "010", "name": "Here Comes Snoopy", "group": "P", "printed": "FAWCETT, CHARLES M. SCHULZ" },
+    { "id": "011", "name": "Turkey in the Straw sheet music", "group": "P", "printed": "DAVID W. GUION, G. SCHIRMER, NEW YORK" },
+    { "id": "012", "name": "Kodak Brownie Holiday Flash Camera box", "group": "K", "printed": "KODAK, BROWNIE HOLIDAY FLASH CAMERA" },
+    { "id": "013", "name": "Kodak Outdoor Guide", "group": "K", "printed": "EASTMAN KODAK COMPANY" },
+    { "id": "014", "name": "Uncle Scrooge comic", "group": "P", "printed": "GOLD KEY, 1968 WALT DISNEY" },
+    { "id": "015", "name": "The Super Hero Time Machine watch ad", "group": "P", "printed": "" },
+    { "id": "016", "name": "Cabinet card portrait", "group": "K", "printed": "BLACK," },
+    { "id": "017", "name": "Black and white photograph, girl", "group": "K", "printed": "" },
+    { "id": "018", "name": "Silver-plate teapot", "group": "M", "printed": "" },
+    { "id": "019", "name": "Green enamel bowl", "group": "M", "printed": "" },
+    { "id": "020", "name": "Shoehorn", "group": "M", "printed": "" },
+    { "id": "021", "name": "Orange-red triangular reflex hammer", "group": "M", "printed": "" },
+    { "id": "022", "name": "Silver butter spreader", "group": "M", "printed": "" },
+    { "id": "023", "name": "Nabob coupon", "group": "P", "printed": "NO. 427050" },
+    { "id": "024", "name": "Keychain, Husky Tower", "group": "S", "printed": "HUSKY TOWER, CALGARY" },
+    { "id": "025", "name": "Velvet Hone safety razor blade sharpener box", "group": "M", "printed": "HAMILTON, ONT." },
+    { "id": "026", "name": "Enamel pins, set of four", "group": "S", "printed": "B&O, MONT ECHO, BUTTON" }
+  ]
+}
