@@ -2,9 +2,28 @@
 
 Edmonton + Toronto 挖到的 26 件舊物,做成「像展示架」的網頁:Landing 是單件物品的海報,點開成左頁(物件)右頁(故事)的書頁,另有一頁縮圖總覽(Index)。
 
-- 設計:`design/moodboard.html`(mood board,Rev. 3)
+- 設計:`design/moodboard.html`(mood board)
+- 網站:`src/`(Next.js App Router),部署在 Vercel,見下方「網站」
 - 物件清單:`data/objects.json`(名稱為暫稱)
 - 3D:`scripts/meshy/`(Meshy multi-image-to-3d pipeline)
+
+## 網站
+
+固定技術棧:Next.js(App Router)、Tailwind CSS v4、GSAP、Lenis,部署在 Vercel;資料庫用 Neon,GLB 與縮圖放 R2。每件物件一頁,另有 Landing 與 Index,全部在 build 時預先生成。
+
+```bash
+npm install
+npm run dev          # 開發
+npm run build        # 正式 build
+npm run typecheck    # tsc --noEmit
+npm test             # pipeline 的 16 項測試
+```
+
+- **內容在哪**:`data/objects.json` 是 26 件的唯一來源(pipeline 也讀它),`src/lib/objects.ts` 用 Zod 驗證,錯的資料會讓 build 失敗而不是上線。每件的故事寫在 `content/stories/<id>.md`。
+- **照片**:`public/objects/<id>/still.(png|jpg|webp)`。沒有照片的物件顯示空底版。012 的圖是暫代。
+- **動效**:`SmoothScroll`(Lenis 接 GSAP ticker)與 `Entrance`(右頁區塊淡入上升 14px、間隔 60ms)。尊重 `prefers-reduced-motion`。
+- **部署**:在 Vercel 匯入這個 repo,Framework 會自動偵測為 Next.js。Neon 之後走 Vercel Marketplace 連結(目前沒有用到資料庫)。
+- **Vercel Hobby 限個人、非商業用途**。接 Square 賣東西之前要升 Pro。
 
 ## 3D pipeline
 

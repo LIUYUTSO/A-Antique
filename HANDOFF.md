@@ -20,12 +20,14 @@ Edmonton + Toronto 挖到的 26 件舊物,做成「像展示架」的網頁。La
 | 圖像 | 原色 |
 | 全站語言 | 英文 |
 | 風格 | Mode E(紙、墨、底版三個中性色,無圓角無陰影無 accent) |
+| 技術棧 | **固定技術棧**(Adam 2026-10-21 確認):Next.js App Router、Tailwind v4、GSAP、Lenis、Three.js;部署 Vercel;DB Neon;檔案 R2。2026-10-21 曾評估 Cloudflare + Astro 並搭過骨架,Adam 研究後決定回到固定棧。評估骨架留在分支 `site-skeleton`(PR #2 已關閉) |
 
 ## 連結
 
 - Repo:https://github.com/LIUYUTSO/A-Antique,PR #1(draft,分支 `meshy-pipeline`)。**main 目前只有初始 commit,本檔與 pipeline 都在分支上,新 session 要先切到 `meshy-pipeline` 或先合併 PR #1。**
 - Mood board(Rev. 4):https://claude.ai/artifact/SViKmxjU9FzDE713uYxw22,原始碼 `design/moodboard.html`
 - 盤點清單(共用資料庫,26 件):https://claude.ai/artifact/PCXc3rRWTtpiBQPiTLN8AB。用 Artifact 工具 `ArtifactData`(collection `objects`,doc id `001` 到 `026`)讀寫。
+- A-Brain PR #67(🧽📶「技術棧寫成固定與可替換矛盾」):**已由 Adam 取消並關閉**(他決定維持固定棧)。正本裡「固定」與「可替換」兩種說法並存仍是事實,但 Adam 沒有要處理。
 - 舊專案 A-Stuff:https://github.com/LIUYUTSO/A-Stuff。裡面**沒有 Meshy**,只有 StableFast3D 本地腳本、`gltf-transform` 壓縮、R2 上傳。
 
 ## 環境變數
@@ -49,6 +51,16 @@ Edmonton + Toronto 挖到的 26 件舊物,做成「像展示架」的網頁。La
 5. **剩下沒模型的件**才送 Meshy,送出前先給 Adam 新的點數明細,等他說開始。
 
 模型檔怎麼進這個環境還沒定。建議 Adam 放 R2 的 `incoming/`,並把 R2 變數加進環境設定。
+
+## 網站骨架(已搭,Next.js)
+
+- 頁面:`/`(Landing,海報式單件)、`/shelf`(Index 縮圖總覽)、`/objects/<id>`(書頁,26 頁),全部靜態預先生成,未知 id 回 404。
+- 資料:`src/lib/objects.ts` 用 Zod 驗證 `data/objects.json`;故事在 `content/stories/<id>.md`(目前只有 012,草稿)。
+- 動效:Lenis 接 GSAP ticker;右頁區塊用 GSAP 淡入(expo/power3,500ms)。
+- 預留 `listing`(狀態、價格)欄位給之後的 yard sale,目前不渲染。
+- **尚未做**:Three.js GLB 檢視器、Landing 到書頁的 GSAP 轉場、Square、Neon 資料庫、連到 Vercel(還沒匯入專案)。
+- 已驗證:`npm test` 16/16、`tsc --noEmit`、`next build`(31 頁)、`npm audit --omit=dev` 0 個漏洞;Chromium 桌面與手機截圖。**未驗證**:實際部署到 Vercel。
+- 備註:Vercel Hobby 限非商業。接 Square 賣東西前要升 Pro;函式請求內容上限 4.5 MB(A-Stuff 已撞過,所以大檔一律瀏覽器直傳 R2)。
 
 ## 程式在哪
 
@@ -75,6 +87,7 @@ design/          moodboard.html、kodak.png(暫代去背圖)、dig-photo.jpg(原
 
 ## 給接手者的提醒
 
+- 技術棧固定(見上表),不要再提議換棧。
 - 回覆用繁體中文台灣用語,先結論後理由,技術術語保留英文。
 - Adam 是審邏輯不審語法,瓶頸是傳輸。收斂模式:先用「意圖/狀態/行為/關係/距離/節奏」複述,確認後交最小可看版本。
 - 不要在對話裡索取 key。不要替 Adam 命名。
