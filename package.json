@@ -2,14 +2,36 @@
   "name": "a-antique",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=20.12" },
+  "engines": {
+    "node": ">=20.12"
+  },
   "scripts": {
     "meshy": "node scripts/meshy/run.mjs",
     "flat": "node scripts/flat/build.mjs",
-    "test": "node --test scripts/meshy/meshy.test.mjs scripts/flat/flat.test.mjs"
+    "test": "node --test scripts/meshy/meshy.test.mjs scripts/flat/flat.test.mjs",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.700.0",
-    "@gltf-transform/core": "^4.4.2"
+    "@gltf-transform/core": "^4.4.2",
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.27",
+    "next": "^16.4.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-markdown": "^10.1.0",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3"
   }
 }

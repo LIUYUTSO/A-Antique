@@ -1,0 +1,34 @@
+@import 'tailwindcss';
+
+/* Mode E, one look on purpose: the site is a book, so it stays on paper in every colour scheme.
+   Tokens: paper, plate (the light-grey photo backdrop), ink. Colour only ever appears inside photographs. */
+@theme inline {
+  --color-paper: oklch(1 0 0);
+  --color-plate: oklch(0.965 0 0);
+  --color-ink: oklch(0 0 0);
+  --font-mono: var(--font-jetbrains), 'Courier New', system-ui, monospace;
+}
+
+@layer base {
+  :root { color-scheme: light; }
+  * { border-radius: 0; }
+  html { background: var(--color-paper); }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 1.7;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+  a:hover { text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--color-ink); outline-offset: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
