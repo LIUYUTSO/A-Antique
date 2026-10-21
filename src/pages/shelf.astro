@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { stillFor } from '../lib/objects';
+
+const objects = (await getCollection('objects')).sort((a, b) => a.data.id.localeCompare(b.data.id));
+---
+
+<Base title="Index — A-Antique" description="Every object on one sheet.">
+  <main class="shelf">
+    <header>
+      <a href="/">← A-Antique</a>
+      <span>Index — {objects.length} objects</span>
+    </header>
+    <ol class="sheet">
+      {
+        objects.map((o) => {
+          const still = stillFor(o.data.id);
+          return (
+            <li>
+              <a class="tile" href={`/objects/${o.data.id}/`} aria-label={`${o.data.id} ${o.data.name}`}>
+                <span class="n">{o.data.id}</span>
+                {still && <img src={still} alt="" loading="lazy" />}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ol>
+    <p class="folio"><em>One tile per object. Tiles fill in as each object is photographed.</em></p>
+  </main>
+</Base>

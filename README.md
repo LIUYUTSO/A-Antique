@@ -2,9 +2,28 @@
 
 Edmonton + Toronto 挖到的 26 件舊物,做成「像展示架」的網頁:Landing 是單件物品的海報,點開成左頁(物件)右頁(故事)的書頁,另有一頁縮圖總覽(Index)。
 
-- 設計:`design/moodboard.html`(mood board,Rev. 3)
+- 設計:`design/moodboard.html`(mood board)
+- 網站:`src/`(Astro 靜態輸出),部署到 Cloudflare Workers,見下方「網站」
 - 物件清單:`data/objects.json`(名稱為暫稱)
 - 3D:`scripts/meshy/`(Meshy multi-image-to-3d pipeline)
+
+## 網站
+
+靜態站,每件物件一頁,另有 Landing 與 Index。部署在 Cloudflare Workers 靜態資源,只有 `/api/*` 會進 Worker(目前只有 `/api/health`,之後給 Square 結帳與 webhook)。
+
+```bash
+npm install
+npm run dev        # 開發
+npm run build      # 輸出到 dist/
+npm run check      # astro check
+npm run worker     # 用 wrangler 在本機跑 Worker + 靜態檔,更接近正式環境
+npm run deploy     # build 後 wrangler deploy(需要 Cloudflare 登入)
+```
+
+- **內容在哪**:`data/objects.json` 是 26 件的唯一來源(pipeline 也讀它),欄位用 Zod 驗證,錯的資料會讓 build 失敗而不是上線。每件的故事寫在 `src/content/stories/<id>.md`。
+- **照片**:`public/objects/<id>/still.(png|jpg|webp)`。沒有照片的物件顯示空底版。012 的圖是暫代。
+- **部署**:在 Cloudflare 後台把 repo 接上 Workers Builds,build 指令 `npm run build`,部署指令 `npx wrangler deploy`。設定檔是 `wrangler.jsonc`,不需要把 token 給別人。
+- **為什麼是 Astro 加靜態輸出**:專案需求是 26 個靜態頁(需要可分享的預覽)、故事用 Markdown 寫、資料要驗證、重度互動只在少數頁面。這些 Astro 的 Content Collections 直接解決;而 Next.js 在 Cloudflare 上的支援路線(vinext、OpenNext)對 Next.js 15 不明確。完整評估見 `HANDOFF.md`。
 
 ## 3D pipeline
 

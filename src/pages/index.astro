@@ -1,0 +1,23 @@
+---
+import { getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { FEATURED_ID, stillFor } from '../lib/objects';
+
+const featured = await getEntry('objects', FEATURED_ID);
+if (!featured) throw new Error(`Featured object ${FEATURED_ID} is not in data/objects.json`);
+const id = featured.data.id;
+const still = stillFor(id);
+---
+
+<Base title="A-Antique">
+  <main class="landing">
+    <div class="plate" transition:name={`plate-${id}`}>
+      {still && <img class="still" src={still} alt={featured.data.name} transition:name={`still-${id}`} />}
+    </div>
+    <span class="corner tl">A-Antique</span>
+    <a class="corner tr" href="/shelf/">Index — 26 ↘</a>
+    <span class="corner bl">No. {id}</span>
+    <span class="corner bc">{featured.data.name}</span>
+    <a class="corner br" href={`/objects/${id}/`}>Open ↘</a>
+  </main>
+</Base>

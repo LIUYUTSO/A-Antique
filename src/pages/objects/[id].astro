@@ -1,0 +1,74 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { GROUPS, stillFor } from '../../lib/objects';
+
+export async function getStaticPaths() {
+  const all = (await getCollection('objects')).sort((a, b) => a.data.id.localeCompare(b.data.id));
+  return all.map((entry, i) => ({
+    params: { id: entry.data.id },
+    props: { entry, prev: all[i - 1]?.data, next: all[i + 1]?.data },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const o = entry.data;
+const still = stillFor(o.id);
+const story = (await getCollection('stories')).find((s) => s.id === o.id);
+const Body = story ? (await render(story)).Content : null;
+const n = Number(o.id);
+const dims = o.sizeMm ? `${o.sizeMm[0]} × ${o.sizeMm[1]} mm` : '[W × H mm — to measure]';
+const found = story?.data.found
+  ? [story.data.found.city, story.data.found.year, story.data.found.price].filter(Boolean).join(', ')
+  : '[City, year]';
+---
+
+<Base title={`${o.id} ${o.name} — A-Antique`} description={o.name}>
+  <main class="spread">
+    <section class="page-l" aria-label="Object">
+      <div class="plate" transition:name={`plate-${o.id}`}>
+        {
+          still ? (
+            <img class="still" src={still} alt={o.name} transition:name={`still-${o.id}`} />
+          ) : (
+            <span class="none">No photo yet</span>
+          )
+        }
+      </div>
+      <div class="cap">
+        <span>Fig. {o.id} — Top-down</span>
+        <span class="folio">{String(n * 2).padStart(3, '0')}</span>
+      </div>
+    </section>
+
+    <article class="page-r">
+      <a href="/shelf/">← Index</a>
+      <div class="num">{o.id}.</div>
+      <h1>{o.name}</h1>
+      <div class="story">
+        {Body ? <Body /> : <p>[Story to be written.]</p>}
+        {story?.data.draft && <p class="tag">[Draft]</p>}
+        {
+          story?.data.related && (
+            <>
+              <div class="sub">Related story — {story.data.related}</div>
+              <p>[Second paragraph.]</p>
+            </>
+          )
+        }
+      </div>
+      <dl class="fields">
+        <dt>Item:</dt><dd>{o.name}</dd>
+        <dt>Group:</dt><dd>{GROUPS[o.group]}</dd>
+        {o.printed && (<><dt>Printed:</dt><dd>{o.printed}</dd></>)}
+        <dt>Dimensions:</dt><dd>{dims}</dd>
+        <dt>Found:</dt><dd>{found}</dd>
+      </dl>
+      <div class="nav nav-row">
+        {prev ? <a href={`/objects/${prev.id}/`}>← {prev.id}</a> : <span />}
+        {next ? <a href={`/objects/${next.id}/`}>{next.id} →</a> : <span />}
+      </div>
+      <span class="folio folio-r">{String(n * 2 + 1).padStart(3, '0')}</span>
+    </article>
+  </main>
+</Base>

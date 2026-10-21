@@ -1,0 +1,30 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '@fontsource/jetbrains-mono/300.css';
+import '@fontsource/jetbrains-mono/300-italic.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'Objects found in Edmonton and Toronto, one at a time.' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <ClientRouter fallback="swap" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

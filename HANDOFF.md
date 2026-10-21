@@ -20,12 +20,15 @@ Edmonton + Toronto 挖到的 26 件舊物,做成「像展示架」的網頁。La
 | 圖像 | 原色 |
 | 全站語言 | 英文 |
 | 風格 | Mode E(紙、墨、底版三個中性色,無圓角無陰影無 accent) |
+| 部署 | **Cloudflare**(2026-10-21 Adam 確認):Workers 靜態資源 + 一支薄 Worker 處理 `/api/*`。R2 與 DNS 本來就在 Cloudflare |
+| 技術棧 | **本專案已移除固定技術棧限制,依專案需求評估**(Adam 2026-10-21)。選定:Astro 7 靜態輸出 + Content Collections,不用 Next.js 與 Vercel |
 
 ## 連結
 
 - Repo:https://github.com/LIUYUTSO/A-Antique,PR #1(draft,分支 `meshy-pipeline`)。**main 目前只有初始 commit,本檔與 pipeline 都在分支上,新 session 要先切到 `meshy-pipeline` 或先合併 PR #1。**
 - Mood board(Rev. 4):https://claude.ai/artifact/SViKmxjU9FzDE713uYxw22,原始碼 `design/moodboard.html`
 - 盤點清單(共用資料庫,26 件):https://claude.ai/artifact/PCXc3rRWTtpiBQPiTLN8AB。用 Artifact 工具 `ArtifactData`(collection `objects`,doc id `001` 到 `026`)讀寫。
+- A-Brain PR #67(🧽📶):技術棧寫成「固定」與「可替換」正本矛盾的訊號與提案修訂,等 Adam 裁決:https://github.com/LIUYUTSO/A-Brain/pull/67
 - 舊專案 A-Stuff:https://github.com/LIUYUTSO/A-Stuff。裡面**沒有 Meshy**,只有 StableFast3D 本地腳本、`gltf-transform` 壓縮、R2 上傳。
 
 ## 環境變數
@@ -49,6 +52,16 @@ Edmonton + Toronto 挖到的 26 件舊物,做成「像展示架」的網頁。La
 5. **剩下沒模型的件**才送 Meshy,送出前先給 Adam 新的點數明細,等他說開始。
 
 模型檔怎麼進這個環境還沒定。建議 Adam 放 R2 的 `incoming/`,並把 R2 變數加進環境設定。
+
+## 網站骨架(已搭,Astro 7)
+
+- 頁面:`/`(Landing,海報式單件)、`/shelf/`(Index 縮圖總覽)、`/objects/<id>/`(書頁,26 頁)。
+- 資料:`src/content.config.ts` 用 Zod 驗證 `data/objects.json`;故事在 `src/content/stories/<id>.md`(目前只有 012,草稿)。
+- Worker:`worker/index.ts`,只處理 `/api/*`,其餘交給靜態檔。已在本機 workerd 驗證:靜態頁 200、`/api/health` 200、未知路徑 404。
+- 預設保留 `listing`(狀態、價格)欄位給之後的 yard sale,目前不渲染。
+- **尚未做**:GSAP 與 Lenis(目前只有 Astro 內建的 view transitions)、Three.js GLB 檢視器、Landing 到書頁的 GSAP 轉場、Square、資料庫。
+- **評估紀錄**(依需求而非預設棧):靜態輸出 + Cloudflare 靜態資源免費且無上限;Vercel Hobby 限非商業,接 Square 後會變成成本問題;Cloudflare 的 Next.js 指南主推 vinext(beta,只提 Next.js 16),Next.js 15 不明確;Neon 在 Workers 上建議 Hyperdrive + `pg`,文件未提 Prisma。
+- **風險待驗證**:Astro `ClientRouter` 在非 Chromium 瀏覽器只有降級動畫;與 GSAP 搭配時轉場後要重新初始化(Astro 文件未涵蓋);Prisma 在 Workers 上是否可行;Workers Builds 對 PR 的自動預覽。
 
 ## 程式在哪
 
@@ -75,6 +88,7 @@ design/          moodboard.html、kodak.png(暫代去背圖)、dig-photo.jpg(原
 
 ## 給接手者的提醒
 
+- 技術棧:本專案不套用「固定棧」,依需求評估。A-Brain 的對應修訂在 PR #67,未裁決前不要把 Cloudflare 或 Astro 當成全域預設。
 - 回覆用繁體中文台灣用語,先結論後理由,技術術語保留英文。
 - Adam 是審邏輯不審語法,瓶頸是傳輸。收斂模式:先用「意圖/狀態/行為/關係/距離/節奏」複述,確認後交最小可看版本。
 - 不要在對話裡索取 key。不要替 Adam 命名。

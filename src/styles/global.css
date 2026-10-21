@@ -1,0 +1,109 @@
+/* Mode E, one look on purpose: the site is a book, so it stays on paper in every colour scheme.
+   Tokens: paper, plate (the light-grey photo backdrop), ink. Colour only ever appears inside photographs. */
+:root {
+  --paper: #ffffff;
+  --plate: #f3f3f3;
+  --ink: #000000;
+  --pad: 24px;
+  --mono: 'JetBrains Mono', 'Courier New', system-ui, monospace;
+  color-scheme: light;
+}
+@media (min-width: 900px) {
+  :root { --pad: 40px; }
+}
+
+* { box-sizing: border-box; border-radius: 0; }
+html { background: var(--paper); }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 1.7;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+h1, h2, p, dl, dd, ol, ul, figure { margin: 0; padding: 0; }
+ol, ul { list-style: none; }
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 0; }
+h1, h2 { font-weight: 400; font-size: 15px; line-height: 1.35; }
+
+/* ---------- Landing ---------- */
+.landing {
+  position: relative;
+  min-height: 100dvh;
+  padding: var(--pad);
+  display: grid;
+}
+.landing .plate {
+  position: relative;
+  background: var(--plate);
+  min-height: calc(100dvh - 2 * var(--pad));
+  display: grid;
+  place-items: center;
+}
+.landing .still { width: min(46vw, 70vh); max-width: 80%; height: auto; display: block; }
+.corner { position: absolute; }
+.corner.tl { top: 20px; left: 24px; }
+.corner.tr { top: 20px; right: 24px; text-align: right; }
+.corner.bl { bottom: 20px; left: 24px; }
+.corner.br { bottom: 20px; right: 24px; text-align: right; }
+.corner.bc { bottom: 20px; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+@media (max-width: 699px) {
+  .corner.bc { display: none; }
+  .landing .still { width: 70vw; }
+}
+
+/* ---------- Spread ---------- */
+.spread { min-height: 100dvh; display: grid; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) {
+  .spread { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .spread::after {
+    content: '';
+    position: fixed; top: 0; bottom: 0; left: 50%;
+    width: 1px; background: var(--ink);
+    pointer-events: none;
+  }
+}
+.page-l { position: relative; padding: var(--pad); display: grid; grid-template-rows: 1fr auto; gap: 14px; }
+.page-l .plate { background: var(--plate); min-height: 60dvh; display: grid; place-items: center; position: relative; }
+.page-l .still { width: 52%; max-width: 420px; height: auto; display: block; }
+.page-l .none { opacity: 0.6; }
+.page-l .cap { display: grid; gap: 0; font-size: 11px; }
+.folio { font-size: 11px; }
+
+.page-r { position: relative; padding: var(--pad); padding-bottom: 64px; display: flex; flex-direction: column; gap: 20px; min-height: 100dvh; }
+.page-r .num { align-self: flex-end; font-size: 20px; font-weight: 400; line-height: 1; }
+.page-r h1 { font-size: 16px; }
+.story { text-transform: none; letter-spacing: 0.03em; }
+.story p { margin: 0 0 1em; }
+.tag { font-weight: 400; }
+.sub { font-weight: 400; margin-bottom: 4px; }
+.fields { margin-top: auto; display: grid; grid-template-columns: 14ch minmax(0, 1fr); gap: 2px 14px; }
+.fields dt { font-style: italic; font-weight: 300; }
+.fields dd { overflow-wrap: anywhere; }
+.page-r .nav { display: flex; justify-content: space-between; gap: 12px; }
+.page-r .nav .folio-r { position: absolute; right: var(--pad); bottom: 22px; }
+.page-r .nav-row { padding-right: 56px; }
+
+/* ---------- Shelf (contact sheet) ---------- */
+.shelf { min-height: 100dvh; padding: var(--pad); display: grid; gap: 22px; align-content: start; }
+.shelf header { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.sheet { display: grid; gap: 6px; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (min-width: 700px) { .sheet { grid-template-columns: repeat(7, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .sheet { grid-template-columns: repeat(13, minmax(0, 1fr)); } }
+.tile { position: relative; aspect-ratio: 1 / 1; background: var(--plate); display: grid; place-items: center; font-size: 11px; letter-spacing: 0.04em; }
+.tile .n { position: absolute; top: 4px; left: 5px; }
+.tile img { width: 72%; height: auto; display: block; }
+.tile:hover { background: var(--ink); color: var(--paper); text-decoration: none; }
+.tile:hover img { opacity: 0.9; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
