@@ -16,8 +16,11 @@ export class MeshyError extends Error {
 
 const defaultSleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// Adam's environment variable is MESHY_APIKEY; MESHY_API_KEY is accepted too.
+export const getApiKey = (env = process.env) => env.MESHY_APIKEY || env.MESHY_API_KEY;
+
 export function createClient({ apiKey, baseUrl = DEFAULT_BASE, fetchImpl = fetch } = {}) {
-  if (!apiKey) throw new Error('MESHY_API_KEY is not set');
+  if (!apiKey) throw new Error('MESHY_APIKEY is not set');
 
   async function request(method, path, body) {
     const res = await fetchImpl(baseUrl + path, {

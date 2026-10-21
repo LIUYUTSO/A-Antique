@@ -34,7 +34,7 @@ shoot/<id>/views/*.jpg  →  Meshy multi-image-to-3d  →  out/models/<id>.glb  
 ### 指令
 
 ```bash
-cp .env.example .env          # 填 MESHY_API_KEY
+cp .env.example .env          # 填 MESHY_APIKEY(MESHY_API_KEY 也可)
 npm install                   # 只有 --upload 需要 @aws-sdk/client-s3
 
 npm run meshy -- 012 --dry-run            # 看計畫與 payload,不送出

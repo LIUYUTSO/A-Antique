@@ -4,7 +4,7 @@ import http from 'node:http';
 import { mkdtempSync, mkdirSync, writeFileSync, existsSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { createClient, buildPayload } from './client.mjs';
+import { createClient, buildPayload, getApiKey } from './client.mjs';
 import { planWork, processObject, runAll, loadState, assertBudget } from './pipeline.mjs';
 
 // A fake Meshy: POST creates a task, GET walks PENDING → IN_PROGRESS → SUCCEEDED (or FAILED).
@@ -182,4 +182,11 @@ test('flat objects never go to Meshy, even with photos', () => {
 test('assertBudget refuses a run the balance cannot cover', () => {
   assert.equal(assertBudget(774, 17), 510);
   assert.throws(() => assertBudget(774, 26), /Need 780 credits.*has 774/);
+});
+
+test('the key is read from MESHY_APIKEY, with MESHY_API_KEY as a fallback', () => {
+  assert.equal(getApiKey({ MESHY_APIKEY: 'a' }), 'a');
+  assert.equal(getApiKey({ MESHY_API_KEY: 'b' }), 'b');
+  assert.equal(getApiKey({ MESHY_APIKEY: 'a', MESHY_API_KEY: 'b' }), 'a');
+  assert.equal(getApiKey({}), undefined);
 });

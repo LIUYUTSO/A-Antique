@@ -2,7 +2,7 @@
 // Usage: node scripts/meshy/run.mjs <id|all> [--dry-run] [--limit N|all] [--concurrency N]
 //        [--force] [--model meshy-7.1] [--compress] [--upload]
 import { readFileSync } from 'node:fs';
-import { createClient, buildPayload } from './client.mjs';
+import { createClient, buildPayload, getApiKey } from './client.mjs';
 import { CREDITS_TEXTURED, assertBudget, loadState, planWork, runAll, toDataUri } from './pipeline.mjs';
 
 try { process.loadEnvFile('.env'); } catch { /* no .env, use the shell environment */ }
@@ -58,7 +58,7 @@ async function main() {
   const work = plan.filter((p) => p.action === 'create' || p.action === 'resume');
   if (work.length === 0) { console.log('Nothing to do.'); return; }
 
-  const client = createClient({ apiKey: process.env.MESHY_API_KEY });
+  const client = createClient({ apiKey: getApiKey() });
   const { balance } = await client.getBalance();
   console.log(`Account balance: ${balance} credits`);
   assertBudget(balance, creates);
