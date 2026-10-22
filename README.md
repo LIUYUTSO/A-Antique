@@ -1,6 +1,6 @@
 # A-Antique
 
-Edmonton + Toronto 挖到的 26 件舊物,做成「像展示架」的網頁:Landing 是單件物品的海報,點開成左頁(物件)右頁(故事)的書頁,另有一頁縮圖總覽(Index)。
+Edmonton + Toronto 挖到的 23 件舊物,做成「像展示架」的網頁:Landing 是單件物品的海報,點開成左頁(物件)右頁(故事)的書頁,另有一頁縮圖總覽(Index)。
 
 - 設計:`design/moodboard.html`(mood board)
 - 網站:`src/`(Next.js App Router),部署在 Vercel,見下方「網站」
@@ -19,7 +19,7 @@ npm run typecheck    # tsc --noEmit
 npm test             # pipeline 的 16 項測試
 ```
 
-- **內容在哪**:`data/objects.json` 是 26 件的唯一來源(pipeline 也讀它),`src/lib/objects.ts` 用 Zod 驗證,錯的資料會讓 build 失敗而不是上線。每件的故事寫在 `content/stories/<id>.md`。
+- **內容在哪**:`data/objects.json` 是 23 件的唯一來源(pipeline 也讀它),`src/lib/objects.ts` 用 Zod 驗證,錯的資料會讓 build 失敗而不是上線。每件的故事寫在 `content/stories/<id>.md`。
 - **照片**:`public/objects/<id>/still.(png|jpg|webp)`。沒有照片的物件顯示空底版。012 的圖是暫代。
 - **動效**:`SmoothScroll`(Lenis 接 GSAP ticker)與 `Entrance`(右頁區塊淡入上升 14px、間隔 60ms)。尊重 `prefers-reduced-motion`。
 - **部署**:在 Vercel 匯入這個 repo,Framework 會自動偵測為 Next.js。Neon 之後走 Vercel Marketplace 連結(目前沒有用到資料庫)。
@@ -35,7 +35,7 @@ shoot/<id>/views/*.jpg  →  Meshy multi-image-to-3d  →  out/models/<id>.glb  
 
 ### 拍攝規則
 
-`data/objects.json` 的 `method` 決定走哪條路:`meshy` 17 件、`flat` 9 件(見下方)。
+`data/objects.json` 的 `method` 決定走哪條路:`meshy` 14 件、`flat` 9 件(見下方)。
 
 **Meshy 件**每件拍 4 張,放在 `shoot/<id>/views/`,檔名排序決定順序:
 
@@ -74,7 +74,7 @@ npm run meshy -- all --limit all --concurrency 5 --compress --upload
 
 ### 成本與限制
 
-- 帶貼圖的任務 30 點(`meshy-7.1` / `meshy-6`),只要網格 20 點。17 件走 Meshy = 510 點,帳戶剩 774 點,餘裕 264 點。失敗的任務退點。
+- 帶貼圖的任務 30 點(`meshy-7.1` / `meshy-6`),只要網格 20 點。14 件走 Meshy = 420 點,帳戶剩 774 點,餘裕 354 點。失敗的任務退點。
 - 每次非 dry-run 都會先查餘額(`GET /openapi/v1/balance`),不夠就不送出。
 - Pro 方案同時最多 10 個 PENDING / IN_PROGRESS 任務,與 Meshy 網頁版共用。遇到 429 會等待後重試。
 - 任務 id 會在輪詢前寫入 `.meshy/state.json`。中斷後重跑會接續同一個任務,不會重複扣點。

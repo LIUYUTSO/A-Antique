@@ -24,6 +24,8 @@ const ObjectSchema = z
     kind: z.enum(['sheet', 'card', 'booklet', 'disc']).optional(),
     sizeMm: z.tuple([z.number().positive(), z.number().positive()]).nullable().optional(),
     printed: z.string().default(''),
+    // Original ids folded into this object when a set was merged into one entry.
+    aliases: z.array(z.string().regex(/^\d{3}$/)).default([]),
     // Reserved for the yard sale extension. Nothing renders prices yet.
     listing: z
       .object({

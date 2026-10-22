@@ -20,31 +20,23 @@
     },
     {
       "id": "003",
-      "name": "Painted wooden figure, pink and orange",
+      "name": "Salt and pepper shaker set",
       "group": "T",
       "printed": "",
-      "method": "meshy"
-    },
-    {
-      "id": "004",
-      "name": "Painted wooden figure, green hat",
-      "group": "T",
-      "printed": "",
-      "method": "meshy"
+      "method": "meshy",
+      "aliases": [
+        "004"
+      ]
     },
     {
       "id": "005",
-      "name": "Wooden figure, yellow and red",
+      "name": "Party whistle toy set",
       "group": "T",
       "printed": "",
-      "method": "meshy"
-    },
-    {
-      "id": "006",
-      "name": "Wooden figure, red bottle shape",
-      "group": "T",
-      "printed": "",
-      "method": "meshy"
+      "method": "meshy",
+      "aliases": [
+        "006"
+      ]
     },
     {
       "id": "007",
@@ -160,17 +152,13 @@
     },
     {
       "id": "021",
-      "name": "Orange-red triangular reflex hammer",
+      "name": "Reflex hammer set",
       "group": "M",
       "printed": "",
-      "method": "meshy"
-    },
-    {
-      "id": "022",
-      "name": "Silver butter spreader",
-      "group": "M",
-      "printed": "",
-      "method": "meshy"
+      "method": "meshy",
+      "aliases": [
+        "022"
+      ]
     },
     {
       "id": "023",
