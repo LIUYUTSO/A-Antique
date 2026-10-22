@@ -11,7 +11,7 @@ export default function SpreadPlate({ still, modelSrc, label }: { still: ReactNo
   const showModel = modelSrc !== null && view === 'model';
 
   return (
-    <div data-plate className="relative grid min-h-[60dvh] place-items-center bg-plate">
+    <div data-plate className="relative grid min-h-[60dvh] md:min-h-[560px] place-items-center bg-plate">
       {showModel ? <ModelViewer src={modelSrc} label={label} /> : still}
       {modelSrc && (
         <button

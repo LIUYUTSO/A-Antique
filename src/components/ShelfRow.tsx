@@ -24,7 +24,7 @@ export default function ShelfRow({ children, label }: { children: ReactNode; lab
   }, []);
 
   return (
-    <ol ref={row} data-lenis-prevent aria-label={label} className="flex gap-1.5 overflow-x-auto pb-3">
+    <ol ref={row} data-lenis-prevent aria-label={label} className="shelf-row flex gap-1.5 overflow-x-auto pb-3">
       {children}
     </ol>
   );
