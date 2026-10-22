@@ -12,7 +12,7 @@ Edmonton + Toronto 挖到的 23 件舊物,做成「像展示架」的網頁。La
 
 ## 連結
 
-- Repo:https://github.com/LIUYUTSO/A-Antique,PR #1(draft,分支 `meshy-pipeline`)。**main 目前只有初始 commit,本檔與 pipeline 都在分支上,新 session 要先切到 `meshy-pipeline` 或先合併 PR #1。**
+- Repo:https://github.com/LIUYUTSO/A-Antique。main 已合併 PR #1 至 #8(pipeline、網站骨架、Edmonton 草稿故事、合併三組、拍攝/Blender/壓縮工具),新 session 直接從 main 開始。
 - Mood board(Rev. 4):https://claude.ai/artifact/SViKmxjU9FzDE713uYxw22,原始碼 `design/moodboard.html`
 - 盤點清單(共用資料庫,23 件):https://claude.ai/artifact/PCXc3rRWTtpiBQPiTLN8AB。用 Artifact 工具 `ArtifactData`(collection `objects`,doc id `001` 到 `026`,缺 004、006、022(已併入 003、005、021))讀寫。
 - A-Brain PR #67(🧽📶「技術棧寫成固定與可替換矛盾」):**已由 Adam 取消並關閉**(他決定維持固定棧)。正本裡「固定」與「可替換」兩種說法並存仍是事實,但 Adam 沒有要處理。
@@ -102,3 +102,9 @@ design/          moodboard.html、kodak.png(暫代去背圖)、dig-photo.jpg(原
 - **Blender MCP 還沒確認**:要在 Adam Mac 上的 session 執行 `bpy.data.objects.keys()`。
 - **仍待辦**(未開工,等 Adam 指示):Three.js 檢視器(播 `<part>.open/.close`)、Landing 到 spread 的 GSAP 轉場、`MESHY_APIKEY` 進環境設定後試跑 012(30 點數,先 `--dry-run`)、匯入既有 SaaS GLB、Vercel 匯入 repo、Neon / Square 延伸。
 - 盤點與 `data/objects.json` 由另一個 session 維護(23 件,有 aliases);拍攝與 Blender 工具都經 aliases 解析編號。
+
+## 工作階段交接(2026-10-21,接續雲端 session)
+
+- 雲端 session `session_014dvKkjMQKq4Nv4oK9JrHd3` 的對話內容本機讀不到,以本檔與 git log 為準;main 最新是 #8。
+- 本機工作區唯一未提交的改動:`.gitignore` 加上 `.shipstudio/`(Ship Studio 的中繼資料,不進版控)。保留,隨本檔一起提交。
+- 「還在等 Adam 的事」與「還沒做」兩節仍有效,未因本次交接而改變。
