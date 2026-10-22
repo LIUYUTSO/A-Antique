@@ -92,3 +92,14 @@ design/          moodboard.html、kodak.png(暫代去背圖)、dig-photo.jpg(原
 - Adam 是審邏輯不審語法,瓶頸是傳輸。收斂模式:先用「意圖/狀態/行為/關係/距離/節奏」複述,確認後交最小可看版本。
 - 不要在對話裡索取 key。不要替 Adam 命名。
 - 平面件、Kodak 暫代圖、物件名稱都是暫代或暫稱,別當成最終內容。Adam 說有些物件識別有誤,會自己更正:**名稱以盤點清單資料庫為準**(`data/objects.json` 只是初始值,更正後要同步回來)。若某件識別改變,要重新確認它的 `group` 與 `method`(flat 或 model),Meshy 的點數也會跟著變。
+
+## 拍攝與 Blender 工具(2026-10-22,Adam 要求)
+
+- **Swift 拍攝工具** `capture/`:Mac 上用 iPhone(Continuity Camera)當固定相機,依清單拍 `views/`(最多 4 張給 Meshy)、`still.jpg`、`extra/`(細節),記錄鎖定狀態到 `capture.json`。**相機與視窗部分沒在 Mac 上實跑過**,只有純邏輯 20 項測試;CI 的 `capture` 工作會在 macOS 編譯它。
+- **Meshy 可接受幾張**:`multi-image-to-3d` 是 1 到 4 張,第一張是正面主視角(官方文件)。
+- **Blender 流程** `blender/`:`clean`(焊接、去碎片、減面到 3 萬、真實尺寸、原點)、`work`(產生 .blend)、`open`(零件做成 `<part>.open`/`<part>.close` 動畫)。用 bpy(Blender 5.2)測過,成品用 gltf-transform 讀回檢查。
+- **壓縮與檢查** `scripts/publish/`:`npm run finish -- <id>`,預算檔案 ≤ 3 MB、三角面 ≤ 3 萬、貼圖 ≤ 1024 px、動畫成對,超過不上傳。壓縮設定刻意不做 join、flatten、palette,避免弄壞有動畫的零件。
+- **Blender MCP**:Adam 說他已開。**這個雲端工作階段看不到任何 Blender 工具**,無法確認連通;要在他 Mac 上的 Claude 工作階段確認(見 `blender/README.md` 最後一節)。手工步驟(分離盒蓋、補盒內印刷)適合在那裡做。
+- **還沒做**:網站的 Three.js 檢視器(要播 `<part>.open`/`<part>.close`)、Meshy 真實 key 試跑、真實模型的清理效果。
+- 共用的壓縮函式改成可指定輸出路徑(`compressGlb(file, log, outFile)`、`uploadToR2({ file })`),Meshy 與平面件原本的 `--compress`、`--upload` 行為不變,但壓縮參數多了 `--flatten false --instance false --palette false`。
+

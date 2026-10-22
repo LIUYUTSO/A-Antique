@@ -2,13 +2,17 @@
 *.log
 *.tsbuildinfo
 .astro/
+.build/
 .env
 .env.*
 .meshy/
 .next/
+.swiftpm/
 .wrangler/
+__pycache__/
 dist/
 next-env.d.ts
 node_modules/
 out/
 shoot/
+work/
