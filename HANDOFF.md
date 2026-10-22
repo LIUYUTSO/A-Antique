@@ -103,3 +103,13 @@ design/          moodboard.html、kodak.png(暫代去背圖)、dig-photo.jpg(原
 - **還沒做**:網站的 Three.js 檢視器(要播 `<part>.open`/`<part>.close`)、Meshy 真實 key 試跑、真實模型的清理效果。
 - 共用的壓縮函式改成可指定輸出路徑(`compressGlb(file, log, outFile)`、`uploadToR2({ file })`),Meshy 與平面件原本的 `--compress`、`--upload` 行為不變,但壓縮參數多了 `--flatten false --instance false --palette false`。
 
+
+## 目前進度與下一步(2026-10-22 交接)
+
+- **PR #7 已合併進 main**(e653cc4):拍攝工具、Blender 清理、壓縮檢查。CI 三項(check / blender / capture)全綠。
+- **Adam 正在 Mac 上第一次實測 `shoot`**,卡在路徑:專案放在 `~/Desktop`,桌面上的資料夾名稱與是否為 git repo 還沒確認(`~/Desktop/A-Antique` 不存在,但 `cd` 曾經成功,原因不明)。下一步:`ls -la ~/Desktop | grep -i antique`,沒有就 `git clone https://github.com/LIUYUTSO/A-Antique.git ~/Desktop/A-Antique`,再跑 `swift run --package-path capture -c release shoot --list-cameras`。
+- **Adam 要把 Mac 上的 CLI 用 Remote Control 接進來**,接上後可直接跑指令。相機預覽的畫面與按鍵(Space / L / R / D)仍需 Adam 在 Mac 前親眼確認,輸出看不出來。
+- **實測要回報的四件事**:有沒有列出 iPhone、預覽有沒有出現、Space 有沒有存檔、L 之後狀態列有沒有顯示鎖住。失敗就依錯誤修 `capture/Sources/shoot/App.swift`。
+- **Blender MCP 還沒確認**:要在 Adam Mac 上的 session 執行 `bpy.data.objects.keys()`。
+- **仍待辦**(未開工,等 Adam 指示):Three.js 檢視器(播 `<part>.open/.close`)、Landing 到 spread 的 GSAP 轉場、`MESHY_APIKEY` 進環境設定後試跑 012(30 點數,先 `--dry-run`)、匯入既有 SaaS GLB、Vercel 匯入 repo、Neon / Square 延伸。
+- 盤點與 `data/objects.json` 由另一個 session 維護(23 件,有 aliases);拍攝與 Blender 工具都經 aliases 解析編號。
