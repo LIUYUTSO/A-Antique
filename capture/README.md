@@ -80,7 +80,7 @@ shoot/<id>/capture.json        相機、鎖定狀態、解析度、拍攝時間
 ## 驗證狀態
 
 - `CaptureCore`(拍攝清單、檔名、物件清單、manifest、進度狀態)有 20 項單元測試,在 Linux 與 macOS 都能跑:`swift test`。
-- **`shoot` 的相機與視窗部分(`Sources/shoot/App.swift`)沒有在 Mac 上實際跑過**。我只有在 Linux 上檢查過語法,AVFoundation 與 AppKit 在那裡無法編譯。CI 的 `capture` 工作會在 macOS 上編譯它,但編譯通過不等於相機會動。第一次請接上 iPhone 實測:能否列出相機、預覽是否出現、Space 是否存檔、L 是否真的鎖住(狀態列會顯示哪些項目鎖住了;有些相機不支援鎖定,會維持自動)。
+- `shoot` 的相機與視窗部分(`Sources/shoot/App.swift`)**已在 GitHub 的 macOS runner 上編譯通過**(`swift build` 與 `swift test`),所以 AVFoundation、AppKit 的 API 用法沒有錯。**但沒有實際跑過**:CI 上沒有相機。第一次請接上 iPhone 實測:能否列出相機、預覽是否出現、Space 是否存檔、L 是否真的鎖住(狀態列會顯示哪些項目鎖住了;有些相機不支援鎖定,會維持自動)。
 
 ## 程式結構
 

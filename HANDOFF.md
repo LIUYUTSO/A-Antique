@@ -95,7 +95,7 @@ design/          moodboard.html、kodak.png(暫代去背圖)、dig-photo.jpg(原
 
 ## 拍攝與 Blender 工具(2026-10-22,Adam 要求)
 
-- **Swift 拍攝工具** `capture/`:Mac 上用 iPhone(Continuity Camera)當固定相機,依清單拍 `views/`(最多 4 張給 Meshy)、`still.jpg`、`extra/`(細節),記錄鎖定狀態到 `capture.json`。**相機與視窗部分沒在 Mac 上實跑過**,只有純邏輯 20 項測試;CI 的 `capture` 工作會在 macOS 編譯它。
+- **Swift 拍攝工具** `capture/`:Mac 上用 iPhone(Continuity Camera)當固定相機,依清單拍 `views/`(最多 4 張給 Meshy)、`still.jpg`、`extra/`(細節),記錄鎖定狀態到 `capture.json`。純邏輯有 20 項測試;相機與視窗部分已在 CI 的 macOS runner 編譯通過,**但沒有實際用 iPhone 跑過**,要由 Adam 在 Mac 上實測。
 - **Meshy 可接受幾張**:`multi-image-to-3d` 是 1 到 4 張,第一張是正面主視角(官方文件)。
 - **Blender 流程** `blender/`:`clean`(焊接、去碎片、減面到 3 萬、真實尺寸、原點)、`work`(產生 .blend)、`open`(零件做成 `<part>.open`/`<part>.close` 動畫)。用 bpy(Blender 5.2)測過,成品用 gltf-transform 讀回檢查。
 - **壓縮與檢查** `scripts/publish/`:`npm run finish -- <id>`,預算檔案 ≤ 3 MB、三角面 ≤ 3 萬、貼圖 ≤ 1024 px、動畫成對,超過不上傳。壓縮設定刻意不做 join、flatten、palette,避免弄壞有動畫的零件。
