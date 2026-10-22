@@ -6,21 +6,9 @@
 
 Edmonton + Toronto 挖到的 23 件舊物,做成「像展示架」的網頁。Landing 是單件物品的海報,點開成左頁(物件)右頁(故事)的書頁,另有一頁縮圖總覽(Index)。參照書:EO BOOKS《選物 General Selection》。
 
-## 已鎖定的決定(Adam)
+## 決定
 
-| 項目 | 決定 |
-| --- | --- |
-| 方向 | A:Index(整座架子)+ Spread(拿起一件) |
-| 拍攝視角 | 全部俯視定裝照 |
-| 3D | 23 件全做。14 件走 Meshy / 既有模型,9 件平面件本地生成。03+04、05+06、21+22 三組各併成一件(Adam 2026-10-22),保留較小編號,另一個記在 `aliases` |
-| 底版 | 淺灰 #F3F3F3(參考圖),白頁上內縮 |
-| 內文 | 句首大寫;標籤、標題、編號全大寫 |
-| 字體 | JetBrains Mono 300/400 |
-| 動效 | transform 解除。expo.out,開場 900ms,不用彈跳 |
-| 圖像 | 原色 |
-| 全站語言 | 英文 |
-| 風格 | Mode E(紙、墨、底版三個中性色,無圓角無陰影無 accent) |
-| 技術棧 | **固定技術棧**(Adam 2026-10-21 確認):Next.js App Router、Tailwind v4、GSAP、Lenis、Three.js;部署 Vercel;DB Neon;檔案 R2。2026-10-21 曾評估 Cloudflare + Astro 並搭過骨架,Adam 研究後決定回到固定棧。評估骨架留在分支 `site-skeleton`(PR #2 已關閉) |
+已鎖定與未決的項目都在 [`DECISIONS.md`](DECISIONS.md),design system 在 [`design/SYSTEM.md`](design/SYSTEM.md)。這份不重複記錄。
 
 ## 連結
 
@@ -55,11 +43,12 @@ Edmonton + Toronto 挖到的 23 件舊物,做成「像展示架」的網頁。La
 ## 網站骨架(已搭,Next.js)
 
 - 頁面:`/`(Landing,海報式單件)、`/shelf`(Index 縮圖總覽)、`/objects/<id>`(書頁,23 頁),全部靜態預先生成,未知 id 回 404。
-- 資料:`src/lib/objects.ts` 用 Zod 驗證 `data/objects.json`;故事在 `content/stories/<id>.md`(目前只有 012,草稿)。
+- 資料:`src/lib/objects.ts` 用 Zod 驗證 `data/objects.json`;故事在 `content/stories/<id>.md`(012 語氣樣本,加 005、010、011、020、023、024、025 七件草稿)。
 - 動效:Lenis 接 GSAP ticker;右頁區塊用 GSAP 淡入(expo/power3,500ms)。
 - 預留 `listing`(狀態、價格)欄位給之後的 yard sale,目前不渲染。
-- **尚未做**:Three.js GLB 檢視器、Landing 到書頁的 GSAP 轉場、Square、Neon 資料庫、連到 Vercel(還沒匯入專案)。
-- 已驗證:`npm test` 16/16、`tsc --noEmit`、`next build`(31 頁)、`npm audit --omit=dev` 0 個漏洞;Chromium 桌面與手機截圖。**未驗證**:實際部署到 Vercel。
+- 已做:Three.js GLB 檢視器(`ModelViewer`,按 `[3D]` 才載入;沒有 `public/models/<id>.glb` 就不顯示按鈕)。
+- **尚未做**:Landing 到書頁的 GSAP 轉場、Square、Neon 資料庫、連到 Vercel(還沒匯入專案)。
+- 已驗證:`npm test` 16/16、`tsc --noEmit`、`next build`、`npm audit --omit=dev` 0 個漏洞;Chromium 桌面與手機截圖。**未驗證**:實際部署到 Vercel。
 - 備註:Vercel Hobby 限非商業。接 Square 賣東西前要升 Pro;函式請求內容上限 4.5 MB(A-Stuff 已撞過,所以大檔一律瀏覽器直傳 R2)。
 
 ## 程式在哪

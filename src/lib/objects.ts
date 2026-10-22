@@ -64,6 +64,12 @@ export function stillFor(id: string): string | null {
   return file ? `/objects/${id}/${file}` : null;
 }
 
+// A model is public/models/<id>.glb: metres, Y up, origin at the base centre, front toward +Z, Draco-compressed.
+// A missing file means the spread simply has no 3D view.
+export function modelFor(id: string): string | null {
+  return existsSync(join(process.cwd(), 'public', 'models', `${id}.glb`)) ? `/models/${id}.glb` : null;
+}
+
 // One Markdown file per object: content/stories/<id>.md. The file name is the object id.
 const StorySchema = z.object({
   found: z.object({ city: z.string(), year: z.string().optional(), price: z.string().optional() }).optional(),
