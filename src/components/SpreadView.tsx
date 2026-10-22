@@ -43,33 +43,33 @@ export default function SpreadView({ id, entrance = true }: { id: string; entran
             )
           }
         />
-        <div data-late className="grid text-[11px]">
+        <div data-late className="grid text-[11px] md:hidden">
           <span>Fig. {o.id} — Top-down</span>
           <span>{String(n * 2).padStart(3, '0')}</span>
         </div>
       </section>
 
-      <Entrance enabled={entrance} className="relative flex min-h-[100dvh] flex-col gap-5 p-6 pb-16 md:p-10 md:pb-16">
-        <Link href="/shelf" data-enter>
+      <Entrance enabled={entrance} className="relative flex min-h-[100dvh] flex-col gap-5 p-6 pb-16 md:items-center md:p-10 md:pb-16">
+        <Link href="/shelf" data-enter className="md:sr-only md:focus:not-sr-only md:focus:absolute md:focus:left-10 md:focus:top-10">
           ← Index
         </Link>
-        <div data-enter className="self-end text-xl font-normal leading-none">
+        <div data-enter className="self-end text-xl font-normal leading-none md:hidden">
           {o.id}.
         </div>
-        <h1 data-enter className="text-base font-normal leading-snug">
+        <h1 data-enter className="text-base font-normal leading-snug md:pt-[52px] md:text-center">
           {o.name}
         </h1>
-        <div data-enter className="normal-case tracking-[0.03em] [&_p]:mb-4">
+        <div data-enter className="normal-case leading-[1.75] tracking-[0.03em] md:mx-[60px] md:mt-[33px] md:tracking-[0.36px] [&_p]:mb-4">
           {story ? <ReactMarkdown>{story.body}</ReactMarkdown> : <p>[Story to be written.]</p>}
           {story?.data.draft && <p className="font-normal">[Draft]</p>}
-          {story?.data.related && (
-            <>
-              <div className="mb-1 font-normal">Related story — {story.data.related}</div>
-              <p>[Second paragraph.]</p>
-            </>
-          )}
         </div>
-        <dl data-enter className="mt-auto grid grid-cols-[14ch_minmax(0,1fr)] gap-x-3.5 gap-y-0.5">
+        {story?.data.related && (
+          <div data-enter className="normal-case leading-[1.75] tracking-[0.03em] md:w-[385px] [&_p]:mb-4">
+            <div className="mb-1 font-normal">Related story — {story.data.related}</div>
+            <p>[Second paragraph.]</p>
+          </div>
+        )}
+        <dl data-enter className="mt-auto grid grid-cols-[14ch_minmax(0,1fr)] gap-x-3.5 gap-y-0.5 md:grid-cols-[82px_178px] md:gap-x-1 md:gap-y-0 md:text-[6px] md:leading-[8px] md:[&>dt]:text-right">
           <dt className="italic">Item:</dt>
           <dd className="break-words">{o.name}</dd>
           {o.printed && (
@@ -83,11 +83,11 @@ export default function SpreadView({ id, entrance = true }: { id: string; entran
           <dt className="italic">Found:</dt>
           <dd>{found}</dd>
         </dl>
-        <nav data-enter className="flex justify-between gap-3 pr-14">
-          {prev ? <Link href={`/objects/${prev.id}`}>← {prev.id}</Link> : <span />}
-          {next ? <Link href={`/objects/${next.id}`}>{next.id} →</Link> : <span />}
+        <nav data-enter className="flex justify-between gap-3 pr-14 md:justify-center md:gap-[34px] md:pr-0">
+          {prev ? <Link href={`/objects/${prev.id}`}>←<span className="md:sr-only"> {prev.id}</span></Link> : <span />}
+          {next ? <Link href={`/objects/${next.id}`}><span className="md:sr-only">{next.id} </span>→</Link> : <span />}
         </nav>
-        <span data-late className="absolute bottom-5 right-6 text-[11px] md:right-10">
+        <span data-late className="absolute bottom-5 right-6 text-[11px] md:hidden">
           {String(n * 2 + 1).padStart(3, '0')}
         </span>
       </Entrance>

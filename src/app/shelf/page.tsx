@@ -9,8 +9,8 @@ export const metadata: Metadata = { title: 'Index — A-Antique', description: '
 export default function Shelf() {
   const objects = getObjects();
   return (
-    <main className="grid min-h-[100dvh] content-start gap-6 p-6 md:p-10">
-      <header className="flex flex-wrap justify-between gap-3">
+    <main className="grid min-h-[100dvh] content-start gap-6 p-6 md:content-center md:p-10">
+      <header className="flex flex-wrap justify-between gap-3 md:sr-only">
         <Link href="/">← A-Antique</Link>
         <span>Index — {objects.length} objects</span>
       </header>
@@ -35,7 +35,7 @@ export default function Shelf() {
           );
         })}
       </ShelfRow>
-      <p className="text-[11px] italic">One tile per object, in order. Scroll sideways. Tiles fill in as each object is photographed.</p>
+      <p className="text-[11px] italic md:sr-only">One tile per object, in order. Scroll sideways. Tiles fill in as each object is photographed.</p>
     </main>
   );
 }

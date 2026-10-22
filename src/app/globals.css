@@ -29,6 +29,10 @@
   :focus-visible { outline: 2px solid var(--color-ink); outline-offset: 0; }
 }
 
+/* V1: the Index row has no visible scrollbar; wheel, trackpad, touch and keys still move it. */
+.shelf-row { scrollbar-width: none; -ms-overflow-style: none; }
+.shelf-row::-webkit-scrollbar { display: none; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
