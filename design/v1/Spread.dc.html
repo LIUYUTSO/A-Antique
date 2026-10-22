@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>A-Antique Spread 012</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;1,300;1,400&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#000;text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible{outline:2px solid #000;outline-offset:0}
+@media (min-width: 768px){ .sp-right{border-left:1px solid #000} }
+</style>
+</helmet>
+<div style="min-height: 860px; box-sizing: border-box; display: flex; flex-wrap: wrap; background: #ffffff; color: #000000; font-family: 'JetBrains Mono', 'Courier New', monospace; font-weight: 300; font-size: 12px; line-height: 1.7; letter-spacing: 0.08em; text-transform: uppercase">
+
+  <section aria-label="Object" style="flex: 1 1 440px; min-width: 0; box-sizing: border-box; padding: {{pad}}; display: flex; flex-direction: column; gap: 14px">
+    <div style="position: relative; flex: 1 1 auto; min-height: 560px; display: grid; place-items: center; background: {{plate}}">
+      <div style="width: 70%; max-width: 420px; aspect-ratio: 1 / 1">
+        <img src="/_blob/e3712ac02f47de31215d58d9162cf956" alt="Kodak Brownie Holiday Flash Camera box" style="display: block; width: 100%; height: 100%; object-fit: contain">
+      </div>
+      <sc-if value="{{showToggle}}" hint-placeholder-val="{{ true }}">
+        
+      </sc-if>
+    </div>
+    
+  </section>
+
+  <section class="sp-right" style="flex: 1 1 440px; min-width: 0; box-sizing: border-box; position: relative; padding: {{pad}}; padding-bottom: 64px; display: flex; flex-direction: column; gap: 20px; width: 631px; justify-content: center; align-items: center; border-style: none">
+    
+    
+    <h1 style="font-size: 16px; font-weight: 400; line-height: 1.35; padding-top: 52px">Kodak Brownie Holiday Flash Camera box</h1>
+    <p style="margin: 0; line-height: 1.75; letter-spacing: 0.36px; text-transform: none; padding-top: 0px; margin-right: 60px; margin-left: 60px; margin-top: 33px">A yellow carton with the camera printed on its front. The side panel carries instructions in a narrow column of small type. [Tone sample. Replace with the dig story: where it was found, what it cost, who sold it.]</p><div style="text-transform: none; letter-spacing: 0.03em; line-height: 1.75; display: flex; flex-direction: column; gap: 16px; width: 385px; height: 272px; align-items: center; justify-content: center">
+      
+      
+      <div>
+        <div style="font-weight: 400; margin-bottom: 4px">Related story — [Title of the related story]</div>
+        <p style="margin: 0">[Second paragraph.]</p>
+      </div>
+    </div>
+    <dl style="margin: 0; margin-top: auto; display: flex; flex-direction: column; gap: 7px; padding-top: 6px; width: 656px; height: 109px; align-items: center; justify-content: flex-end">
+      <div data-dc-group="" style="box-sizing: border-box; display: block; flex-direction: column; gap: 7px; justify-content: center; align-items: flex-start"><div style="display: flex; align-items: center; height: 8px"><dt style="flex: 0 0 82px; box-sizing: border-box; font-style: italic; text-align: right; font-size: 6px; line-height: 0">ITEM :</dt><dd style="flex: 0 0 178px; margin: 0; overflow-wrap: anywhere; font-size: 6px; line-height: 0">&nbsp;KODAK BROWNIE HOLIDAY FLASH CAMERA BOX</dd></div><div style="display: flex; align-items: center; height: 8px"><dt style="flex: 0 0 82px; box-sizing: border-box; font-style: italic; text-align: right; font-size: 6px; line-height: 0">PRINTED :</dt><dd style="flex: 0 0 178px; margin: 0; overflow-wrap: anywhere; font-size: 6px; line-height: 0">&nbsp;KODAK, BROWNIE HOLIDAY FLASH CAMERA</dd></div><div style="display: flex; align-items: center; height: 8px"><dt style="flex: 0 0 82px; box-sizing: border-box; font-style: italic; text-align: right; font-size: 6px; line-height: 0">DIMENSIONS :</dt><dd style="flex: 0 0 178px; margin: 0; font-size: 6px; line-height: 0">&nbsp;[W × H MM — TO MEASURE]</dd></div><div style="display: flex; align-items: center; height: 8px"><dt style="flex: 0 0 82px; box-sizing: border-box; font-style: italic; text-align: right; font-size: 6px; line-height: 0">FOUND :</dt><dd style="flex: 0 0 178px; margin: 0; font-size: 6px; line-height: 0">&nbsp;[CITY, YEAR]</dd></div></div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </dl>
+    <div style="display: flex; gap: 0px; padding-right: 0px; width: 628px; height: 33px; flex-direction: row; justify-content: center; align-items: center">
+      <div data-dc-group="" style="box-sizing: border-box; display: flex; flex-direction: row; gap: 34px; align-items: center; height: 23px"><a href="Spread.dc.html">←</a><a href="Spread.dc.html">→</a></div>
+      
+    </div>
+    
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"plate":{"editor":"color","default":"#F3F3F3","section":"Spread"},"pad":{"editor":"range","default":40,"min":16,"max":80,"step":2,"unit":"px","section":"Spread"},"showToggle":{"editor":"boolean","default":true,"section":"Spread"},"$preview":{"width":1440,"height":860}}'>
+class Component extends DCLogic {
+renderVals() {
+const pad = this.props.pad ?? 40;
+return {
+plate: this.props.plate ?? '#F3F3F3',
+pad: pad + 'px',
+showToggle: this.props.showToggle ?? true
+};
+}
+}
+</script>
+</body>
+</html>

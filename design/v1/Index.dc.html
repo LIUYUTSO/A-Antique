@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>A-Antique Index</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;1,300;1,400&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#000;text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible{outline:2px solid #000;outline-offset:0}
+.tile:hover{background:#000 !important;color:#fff !important;text-decoration:none}
+.tile:focus-visible{outline:2px solid #000;outline-offset:2px}
+.tile-row{scrollbar-width:none;-ms-overflow-style:none}
+.tile-row::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+<div style="min-height: 520px; box-sizing: border-box; padding: 40px; display: flex; flex-direction: column; gap: 24px; align-content: flex-start; background: #ffffff; color: #000000; font-family: 'JetBrains Mono', 'Courier New', monospace; font-weight: 300; font-size: 12px; line-height: 1.7; letter-spacing: 0.08em; text-transform: uppercase; height: 857px; justify-content: center">
+  
+  
+  <div data-dc-group="" style="box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; justify-content: flex-start; align-items: normal; height: 188px"><div class="tile-row" style="display: flex; gap: {{gap}}; overflow-x: auto; padding-bottom: 12px; align-items: center; flex-direction: row">
+    <sc-for list="{{items}}" as="item" hint-placeholder-count="23">
+      <a class="tile" href="Spread.dc.html" aria-label="{{item.label}}" style="position: relative; flex: 0 0 auto; width: {{tileW}}; aspect-ratio: 1 / 1; display: grid; place-items: center; box-sizing: border-box; background: {{plate}}; color: #000000; font-size: 11px; letter-spacing: 0.04em">
+        <span style="position: absolute; left: 5px; top: 4px">{{item.id}}</span>
+        <sc-if value="{{item.src}}" hint-placeholder-val="{{ false }}">
+          <img src="{{item.src}}" alt="" style="width: 72%; height: 64%; object-fit: contain; margin-top: 12px">
+        </sc-if>
+      </a>
+    </sc-for>
+  </div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"plate":{"editor":"color","default":"#F3F3F3","section":"Index"},"tile":{"editor":"range","default":200,"min":120,"max":280,"step":4,"unit":"px","section":"Index"},"gap":{"editor":"range","default":6,"min":0,"max":24,"step":1,"unit":"px","section":"Index"},"$preview":{"width":1440,"height":520}}'>
+class Component extends DCLogic {
+renderVals() {
+const plate = this.props.plate ?? '#F3F3F3';
+const tile = this.props.tile ?? 200;
+const gap = this.props.gap ?? 6;
+const rows = [
+['001', 'Family First Aid poison guide wheel'],
+['002', 'X-ray timer'],
+['003', 'Salt and pepper shaker set, painted wooden figures'],
+['005', 'Party whistle toy set'],
+['007', 'Salt and pepper shaker set, ceramic frog and drum'],
+['008', 'Doll head, chipped paint'],
+['009', 'Marbles card'],
+['010', 'Here Comes Snoopy'],
+['011', 'Turkey in the Straw sheet music'],
+['012', 'Kodak Brownie Holiday Flash Camera box'],
+['013', 'Kodak Outdoor Guide'],
+['014', 'Uncle Scrooge comic'],
+['015', 'The Super Hero Time Machine watch ad'],
+['016', 'Cabinet card portrait'],
+['017', 'Black and white photograph, girl'],
+['018', 'Silver-plate teapot'],
+['019', 'Green enamel bowl'],
+['020', 'Shoehorn'],
+['021', 'Reflex hammer set'],
+['023', 'Nabob coupon'],
+['024', 'Husky Tower flint lighter'],
+['025', 'Velvet Hone safety razor blade sharpener box'],
+['026', 'Enamel pins, set of four']
+];
+return {
+plate,
+tileW: tile + 'px',
+gap: gap + 'px',
+items: rows.map(([id, name]) => ({
+id,
+label: id + ' ' + name,
+src: id === '012' ? '/_blob/e3712ac02f47de31215d58d9162cf956' : ''
+}))
+};
+}
+}
+</script>
+</body>
+</html>
