@@ -19,7 +19,7 @@ type Props = {
 const OPEN_MS = 0.9;
 
 // Landing poster. Open ↘ plays: the plate shrinks into the left page while the object travels and scales to
-// its place, the gutter draws from the top, the right page blocks rise in. Then the route changes to the spread,
+// its place, the gutter draws from the top (above the plate, below the object, as on the mood board), the right page blocks rise in. Then the route changes to the spread,
 // which looks identical. Under reduced motion, or without JavaScript, Open is an ordinary link.
 export default function LandingStage({ spread, id, name, still, count }: Props) {
   const router = useRouter();
@@ -47,7 +47,8 @@ export default function LandingStage({ spread, id, name, still, count }: Props) 
 
     const toStill = layer.querySelector<HTMLElement>('[data-still]');
     const fromStill = post.querySelector<HTMLElement>('[data-landing-still]');
-    const gutter = layer.querySelector<HTMLElement>('[data-gutter]');
+    const realGutter = layer.querySelector<HTMLElement>('[data-gutter]');
+    const gutter = post.querySelector<HTMLElement>('[data-landing-gutter]');
     const blocks = layer.querySelectorAll('[data-enter]');
     const late = layer.querySelectorAll('[data-late]');
     const labels = post.querySelectorAll('[data-landing-label]');
@@ -57,13 +58,13 @@ export default function LandingStage({ spread, id, name, still, count }: Props) 
     const tp = toPlate.getBoundingClientRect();
 
     gsap.set(layer, { visibility: 'visible' });
-    gsap.set([toPlate, toStill].filter(Boolean), { opacity: 0 });
+    gsap.set([toPlate, toStill, realGutter].filter(Boolean), { opacity: 0 });
     gsap.set(fromPlate, { transformOrigin: '0 0' });
 
     const t = gsap.timeline({
       defaults: { ease: 'expo.out' },
       onComplete: () => {
-        gsap.set([toPlate, toStill].filter(Boolean), { opacity: 1 });
+        gsap.set([toPlate, toStill, realGutter].filter(Boolean), { opacity: 1 });
         gsap.set(post, { autoAlpha: 0 });
         try {
           sessionStorage.setItem(ARRIVED_FROM_LANDING, String(Date.now()));
@@ -98,7 +99,7 @@ export default function LandingStage({ spread, id, name, still, count }: Props) 
     }
 
     if (gutter) {
-      t.fromTo(gutter, { scaleY: 0, transformOrigin: 'top' }, { scaleY: 1, duration: OPEN_MS }, 0);
+      t.fromTo(gutter, { opacity: 1, scaleY: 0, transformOrigin: 'top' }, { scaleY: 1, duration: OPEN_MS }, 0);
     }
     t.fromTo(late, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5, ease: 'power3.out' }, 0.4).fromTo(
       blocks,
@@ -116,6 +117,7 @@ export default function LandingStage({ spread, id, name, still, count }: Props) 
 
       <div ref={poster} className="absolute inset-0 p-6 md:p-10">
         <div data-landing-plate className="h-full w-full bg-plate" />
+        <div data-landing-gutter aria-hidden className="pointer-events-none fixed inset-y-0 left-1/2 hidden w-px bg-ink opacity-0 md:block" />
         {still && (
           <div className="pointer-events-none absolute inset-6 grid place-items-center md:inset-10">
             <div data-landing-still className="relative aspect-square w-[min(70vw,62dvh)]">
