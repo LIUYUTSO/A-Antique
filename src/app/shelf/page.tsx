@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import ShelfRow from '@/components/ShelfRow';
 import { getObjects, stillFor } from '@/lib/objects';
 
 export const metadata: Metadata = { title: 'Index — A-Antique', description: 'Every object on one sheet.' };
@@ -13,11 +14,11 @@ export default function Shelf() {
         <Link href="/">← A-Antique</Link>
         <span>Index — {objects.length} objects</span>
       </header>
-      <ol className="grid grid-cols-5 gap-1.5 md:grid-cols-7 xl:grid-cols-13">
+      <ShelfRow label="Objects">
         {objects.map((o) => {
           const still = stillFor(o.id);
           return (
-            <li key={o.id}>
+            <li key={o.id} className="w-[min(38vw,200px)] shrink-0">
               <Link
                 href={`/objects/${o.id}`}
                 aria-label={`${o.id} ${o.name}`}
@@ -33,8 +34,8 @@ export default function Shelf() {
             </li>
           );
         })}
-      </ol>
-      <p className="text-[11px] italic">One tile per object. Tiles fill in as each object is photographed.</p>
+      </ShelfRow>
+      <p className="text-[11px] italic">One tile per object, in order. Scroll sideways. Tiles fill in as each object is photographed.</p>
     </main>
   );
 }

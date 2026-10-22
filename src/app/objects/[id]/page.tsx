@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import Entrance from '@/components/Entrance';
-import { GROUPS, getObject, getObjects, getStory, stillFor } from '@/lib/objects';
+import SpreadPlate from '@/components/SpreadPlate';
+import { getObject, getObjects, getStory, modelFor, stillFor } from '@/lib/objects';
 
 type Params = { id: string };
 
@@ -30,6 +31,7 @@ export default async function Spread({ params }: { params: Promise<Params> }) {
   const prev = all[i - 1];
   const next = all[i + 1];
   const still = stillFor(o.id);
+  const model = modelFor(o.id);
   const story = getStory(o.id);
   const n = Number(o.id);
   const dims = o.sizeMm ? `${o.sizeMm[0]} × ${o.sizeMm[1]} mm` : '[W × H mm — to measure]';
@@ -42,15 +44,19 @@ export default async function Spread({ params }: { params: Promise<Params> }) {
       <div aria-hidden className="pointer-events-none fixed inset-y-0 left-1/2 hidden w-px bg-ink md:block" />
 
       <section aria-label="Object" className="grid grid-rows-[1fr_auto] gap-3.5 p-6 md:p-10">
-        <div className="relative grid min-h-[60dvh] place-items-center bg-plate">
-          {still ? (
-            <div className="relative aspect-square w-[min(70%,420px)]">
-              <Image src={still} alt={o.name} fill priority sizes="(min-width: 768px) 30vw, 70vw" className="object-contain" />
-            </div>
-          ) : (
-            <span className="opacity-60">No photo yet</span>
-          )}
-        </div>
+        <SpreadPlate
+          label={o.name}
+          modelSrc={model}
+          still={
+            still ? (
+              <div className="relative aspect-square w-[min(70%,420px)]">
+                <Image src={still} alt={o.name} fill priority sizes="(min-width: 768px) 30vw, 70vw" className="object-contain" />
+              </div>
+            ) : (
+              <span className="opacity-60">No photo yet</span>
+            )
+          }
+        />
         <div className="grid text-[11px]">
           <span>Fig. {o.id} — Top-down</span>
           <span>{String(n * 2).padStart(3, '0')}</span>
@@ -80,8 +86,6 @@ export default async function Spread({ params }: { params: Promise<Params> }) {
         <dl data-enter className="mt-auto grid grid-cols-[14ch_minmax(0,1fr)] gap-x-3.5 gap-y-0.5">
           <dt className="italic">Item:</dt>
           <dd className="break-words">{o.name}</dd>
-          <dt className="italic">Group:</dt>
-          <dd>{GROUPS[o.group]}</dd>
           {o.printed && (
             <>
               <dt className="italic">Printed:</dt>
