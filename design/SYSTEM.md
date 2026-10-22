@@ -47,7 +47,9 @@ Mode E。這個網站是一本書:紙、墨、底版三個中性色,一種等寬
 | Spread | `src/app/objects/[id]/page.tsx` | 書頁。伺服器端渲染,build 時預先生成 |
 | SpreadPlate | `src/components/SpreadPlate.tsx` | 左頁底版。`[3D]` / `[Still]` 切換。有模型才出現按鈕 |
 | ModelViewer | `src/components/ModelViewer.tsx` | Three.js 檢視器,按需載入。透明背景,讓 `plate` 透出來 |
-| Entrance | `src/components/Entrance.tsx` | 右頁區塊淡入上升 |
+| Entrance | `src/components/Entrance.tsx` | 右頁區塊淡入上升。從 Landing 轉場過來時略過,避免重播 |
+| SpreadView | `src/components/SpreadView.tsx` | 一整頁 Spread。Spread 路由與 Landing 底層共用 |
+| LandingStage | `src/components/LandingStage.tsx` | Landing 海報與開啟轉場 |
 | SmoothScroll | `src/components/SmoothScroll.tsx` | Lenis 接 GSAP ticker |
 | Index tile | `src/app/shelf/page.tsx` | 方格,左上角編號,hover 反白 |
 | ShelfRow | `src/components/ShelfRow.tsx` | Index 的橫向列。滾輪轉橫向,`data-lenis-prevent` 讓 Lenis 不介入 |
@@ -74,7 +76,7 @@ Mode E。這個網站是一本書:紙、墨、底版三個中性色,一種等寬
 | 禁止 | 彈跳、elastic、hover 浮起、hover 變色 |
 | reduced-motion | 全部跳到終態,不位移。目前由 CSS 把 duration 壓到 0.01ms,Entrance 直接略過 |
 
-**實作狀態:** 右頁區塊淡入已完成。開啟的 Landing 到 Spread 轉場**尚未實作**。
+**實作狀態:** 右頁區塊淡入與 Landing → Spread 轉場已完成(`LandingStage`)。反向(Spread → Landing)尚未做。轉場的終點是實測 Landing 底下那份真正的 Spread(同一個 `SpreadView`),所以終態與 Spread 頁相同是結構保證。reduced-motion 或無 JavaScript 時,`Open ↘` 是一般連結,不播動畫。
 
 ## 3D 檢視器
 

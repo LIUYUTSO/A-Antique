@@ -47,7 +47,8 @@ Edmonton + Toronto 挖到的 23 件舊物,做成「像展示架」的網頁。La
 - 動效:Lenis 接 GSAP ticker;右頁區塊用 GSAP 淡入(expo/power3,500ms)。
 - 預留 `listing`(狀態、價格)欄位給之後的 yard sale,目前不渲染。
 - 已做:Three.js GLB 檢視器(`ModelViewer`,按 `[3D]` 才載入;沒有 `public/models/<id>.glb` 就不顯示按鈕)。
-- **尚未做**:Landing 到書頁的 GSAP 轉場、Square、Neon 資料庫、連到 Vercel(還沒匯入專案)。
+- 已做:Landing → Spread 轉場(`LandingStage`)。Vercel 已匯入並部署(https://a-antique.vercel.app)。
+- **尚未做**:Spread → Landing 的反向轉場、Square、Neon 資料庫。
 - 已驗證:`npm test` 16/16、`tsc --noEmit`、`next build`、`npm audit --omit=dev` 0 個漏洞;Chromium 桌面與手機截圖。**未驗證**:實際部署到 Vercel。
 - 備註:Vercel Hobby 限非商業。接 Square 賣東西前要升 Pro;函式請求內容上限 4.5 MB(A-Stuff 已撞過,所以大檔一律瀏覽器直傳 R2)。
 
