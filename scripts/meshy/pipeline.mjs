@@ -85,16 +85,23 @@ async function download(ctx, url, dest) {
   writeFileSync(dest, Buffer.from(await res.arrayBuffer()));
 }
 
-export function compressGlb(file, log) {
-  // Same recipe as A-Stuff: 1024px WebP textures + Draco. Geometry is already sized by Meshy's remesh.
-  const r = spawnSync('npx', ['-y', '@gltf-transform/cli', 'optimize', file, file,
-    '--simplify', 'false', '--join', 'false', '--compress', 'draco', '--texture-compress', 'webp', '--texture-size', '1024'],
-  { stdio: 'inherit' });
+// 1024px WebP textures + Draco, nothing else. Geometry is already sized (Meshy remesh or Blender clean),
+// and the other optimize passes would change the scene: flatten and join would break animated parts such
+// as a lid, and palette would merge materials. Writes to `outFile`, which defaults to compressing in place.
+export const OPTIMIZE_ARGS = [
+  '--simplify', 'false', '--join', 'false', '--flatten', 'false', '--instance', 'false', '--palette', 'false',
+  '--compress', 'draco', '--texture-compress', 'webp', '--texture-size', '1024',
+];
+
+export function compressGlb(file, log, outFile = file) {
+  mkdirSync(dirname(outFile), { recursive: true });
+  const r = spawnSync('npx', ['-y', '@gltf-transform/cli', 'optimize', file, outFile, ...OPTIMIZE_ARGS], { stdio: 'inherit' });
   if (r.status !== 0) throw new Error(`gltf-transform failed for ${file}`);
-  log(`compressed ${basename(file)}`);
+  log(`compressed ${basename(file)}${outFile === file ? '' : ` -> ${outFile}`}`);
 }
 
-export async function uploadToR2({ root, id, log }) {
+// `file` overrides which GLB is uploaded as models/<id>.glb (default out/models/<id>.glb).
+export async function uploadToR2({ root, id, log, file }) {
   const need = ['R2_ACCOUNT_ID', 'R2_ACCESS_KEY_ID', 'R2_SECRET_ACCESS_KEY', 'R2_BUCKET'];
   const missing = need.filter((k) => !process.env[k]);
   if (missing.length) throw new Error(`Missing R2 env: ${missing.join(', ')}`);
@@ -105,7 +112,7 @@ export async function uploadToR2({ root, id, log }) {
     credentials: { accessKeyId: process.env.R2_ACCESS_KEY_ID, secretAccessKey: process.env.R2_SECRET_ACCESS_KEY },
   });
   const jobs = [
-    [join(root, 'out', 'models', `${id}.glb`), `models/${id}.glb`, 'model/gltf-binary'],
+    [file ?? join(root, 'out', 'models', `${id}.glb`), `models/${id}.glb`, 'model/gltf-binary'],
     [join(root, 'out', 'thumbnails', `${id}.png`), `thumbnails/${id}.png`, 'image/png'],
   ];
   const urls = {};

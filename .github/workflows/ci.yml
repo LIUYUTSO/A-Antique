@@ -18,3 +18,30 @@ jobs:
       - run: npm test
       - run: npm run typecheck
       - run: npm run build
+
+  # Builds the camera app on macOS, so the AVFoundation and AppKit code is at least compiled in CI.
+  # It cannot run a camera there; that is checked by hand on a Mac with an iPhone.
+  capture:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: swift build
+        working-directory: capture
+      - run: swift test
+        working-directory: capture
+
+  # Runs the Blender script tests with the bpy module, no Blender window needed.
+  blender:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: npm ci
+      - run: pip install bpy
+      - run: python blender/tests/test_blender.py

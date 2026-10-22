@@ -6,6 +6,8 @@ Edmonton + Toronto 挖到的 23 件舊物,做成「像展示架」的網頁:Land
 - 網站:`src/`(Next.js App Router),部署在 Vercel,見下方「網站」
 - 物件清單:`data/objects.json`(名稱為暫稱)
 - 3D:`scripts/meshy/`(Meshy multi-image-to-3d pipeline)
+- 拍攝:`capture/`(Swift,iPhone 當固定相機,見 `capture/README.md`)
+- 清理與壓縮:`blender/`、`scripts/blender/`、`scripts/publish/`(見 `blender/README.md`)
 
 ## 網站
 
@@ -16,7 +18,7 @@ npm install
 npm run dev          # 開發
 npm run build        # 正式 build
 npm run typecheck    # tsc --noEmit
-npm test             # pipeline 的 16 項測試
+npm test             # Node 測試 28 項(pipeline、平面件、壓縮檢查、Blender 指令)
 ```
 
 - **內容在哪**:`data/objects.json` 是 23 件的唯一來源(pipeline 也讀它),`src/lib/objects.ts` 用 Zod 驗證,錯的資料會讓 build 失敗而不是上線。每件的故事寫在 `content/stories/<id>.md`。
@@ -93,3 +95,22 @@ npm run flat -- all          # 全部 flat,缺照片的會跳過
 
 - `npm test`:15 項。Meshy 部分用本機 mock server 驗證建立、輪詢、下載、接續、失敗重建、429 重試、多件並行、flat 不送 Meshy、餘額不足拒絕;flat 部分驗證尺寸、材質、圓盤、讀寫來回,產出的 GLB 通過 glTF validator。
 - 尚未用真實 API key 跑過。第一次請先用 `--dry-run`,再單件試跑 012,確認成品後再放大。
+
+## 從拍照到上線
+
+```
+iPhone  ──shoot──▶  shoot/<id>/views, still.jpg, extra/
+                        │ npm run meshy -- <id>        (平面件:npm run flat -- <id>)
+                        ▼
+                   out/models/<id>.glb
+                        │ npm run blender -- clean <id>
+                        ▼
+                   out/clean/<id>.glb ──(手工補細節:work、open)──▶ out/final/<id>.glb
+                        │ npm run finish -- <id> --upload
+                        ▼
+                   out/publish/<id>.glb  →  R2  →  網站
+```
+
+- **拍攝**(`capture/`):`swift run --package-path capture -c release shoot 012`。Meshy 最多吃 4 張,所以 `views/` 最多 4 張,多拍的放 `extra/`。細節見 `capture/README.md`。
+- **清理、手工補細節、壓縮檢查**:`blender/README.md`。預算是檔案 ≤ 3 MB、三角面 ≤ 3 萬、貼圖 ≤ 1024 px,超過不會上傳。
+- 測試:Node `npm test`;Swift `cd capture && swift test`;Blender `python blender/tests/test_blender.py`(需要 `pip install bpy`)。CI 三種都跑,Swift 在 macOS 上編譯。
