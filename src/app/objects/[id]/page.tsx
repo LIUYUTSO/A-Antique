@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import Entrance from '@/components/Entrance';
 import SpreadPlate from '@/components/SpreadPlate';
-import { GROUPS, getObject, getObjects, getStory, modelFor, stillFor } from '@/lib/objects';
+import { getObject, getObjects, getStory, modelFor, stillFor } from '@/lib/objects';
 
 type Params = { id: string };
 
@@ -86,8 +86,6 @@ export default async function Spread({ params }: { params: Promise<Params> }) {
         <dl data-enter className="mt-auto grid grid-cols-[14ch_minmax(0,1fr)] gap-x-3.5 gap-y-0.5">
           <dt className="italic">Item:</dt>
           <dd className="break-words">{o.name}</dd>
-          <dt className="italic">Group:</dt>
-          <dd>{GROUPS[o.group]}</dd>
           {o.printed && (
             <>
               <dt className="italic">Printed:</dt>

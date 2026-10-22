@@ -36,8 +36,8 @@ Mode E。這個網站是一本書:紙、墨、底版三個中性色,一種等寬
 
 - **Spread:** 兩欄(桌面)。中縫是 1px 的 `ink` 線。左頁是物件,右頁是文字。頁面內距 24px,桌面 40px。
 - **左頁:** 白頁上內縮一塊 `plate`,物件置中,圖說在底版外下方。
-- **右頁由上而下:** 返回連結、編號、標題、故事、Item / Group / Printed / Dimensions / Found、上一件與下一件。頁碼在外側下角(左頁偶數、右頁奇數)。
-- **Index:** 一件一格的 contact sheet。手機 5 欄、平板 7 欄、桌面 13 欄。
+- **右頁由上而下:** 返回連結、編號、標題、故事、Item / Printed / Dimensions / Found、上一件與下一件。沒有 Group 列,網站不顯示分組。頁碼在外側下角(左頁偶數、右頁奇數)。
+- **Index:** 一件一格,依編號排成**單列,橫向移動**,不分組。tile 寬 `min(38vw, 200px)`。滑鼠滾輪在列上轉成橫向捲動,到頭才放行給頁面。
 - **Landing:** 一個物件放在一塊 `plate` 上,四個標籤,別無他物。
 
 ## 元件
@@ -50,6 +50,7 @@ Mode E。這個網站是一本書:紙、墨、底版三個中性色,一種等寬
 | Entrance | `src/components/Entrance.tsx` | 右頁區塊淡入上升 |
 | SmoothScroll | `src/components/SmoothScroll.tsx` | Lenis 接 GSAP ticker |
 | Index tile | `src/app/shelf/page.tsx` | 方格,左上角編號,hover 反白 |
+| ShelfRow | `src/components/ShelfRow.tsx` | Index 的橫向列。滾輪轉橫向,`data-lenis-prevent` 讓 Lenis 不介入 |
 
 ## 狀態
 
@@ -77,9 +78,9 @@ Mode E。這個網站是一本書:紙、墨、底版三個中性色,一種等寬
 
 ## 3D 檢視器
 
-- **模型規格(檢視器的假設):** `public/models/<id>.glb`,單位公尺,Y 軸朝上,原點在底面中心,正面朝 +Z,可含 Draco。這份規格是提案,尚未經 Adam 確認(見 `DECISIONS.md` #4)。
+- **模型規格(檢視器的假設):** `public/models/<id>.glb`,單位公尺,Y 軸朝上,正面朝 +Z,可含 Draco。原點由 Adam 在 Blender 設定;檢視器本身以包圍盒置中,所以不依賴原點。正式模型放 R2,檔案可含多個物件組成的場景。
 - **鏡頭:** 所有物件共用一組。模型縮放到最長邊為 1,鏡頭從正面略高處看,距離 2.1,可縮放範圍 1.05 到 4.2。
-- **互動:** 拖曳旋轉、滾輪縮放、方向鍵旋轉。無平移、無自動旋轉。
+- **互動:** 拖曳旋轉、滾輪縮放、方向鍵旋轉。無平移、無自動旋轉。觸控:橫向拖曳旋轉,縱向拖曳仍可捲頁(`touch-action: pan-y`)。
 - **光:** 中性的 RoomEnvironment,不加方向光,避免每件物件的陰影方向不同。
 - **效能:** 只在動的時候渲染。靜止的場景不花 GPU。
 - **載入:** 按下 `[3D]` 才載入 three.js 與模型。Still 是第一個畫面。
@@ -91,4 +92,4 @@ Mode E。這個網站是一本書:紙、墨、底版三個中性色,一種等寬
 
 - focus 可見(已做)。
 - reduced-motion(已做)。
-- 對比與 APCA:**尚未量測**,見 `DECISIONS.md` #18。內文是 12px、字重 300 的黑字白底,實測前不宣稱通過。
+- 對比與 APCA:Adam 決定不量測。內文是 12px、字重 300 的黑字白底,**沒有量過,不宣稱通過**。

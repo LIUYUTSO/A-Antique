@@ -41,7 +41,7 @@ export default function ModelViewer({ src, label }: { src: string; label: string
     canvas.tabIndex = 0;
     canvas.setAttribute('role', 'img');
     canvas.setAttribute('aria-label', `${label}, 3D model. Drag to turn, scroll to zoom, arrow keys to turn.`);
-    canvas.style.cssText = 'display:block;width:100%;height:100%;touch-action:none';
+    canvas.style.cssText = 'display:block;width:100%;height:100%;touch-action:pan-y';
     el.appendChild(canvas);
 
     const scene = new Scene();
