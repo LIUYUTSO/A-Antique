@@ -4,7 +4,7 @@
 
 ## 專案一句話
 
-Edmonton + Toronto 挖到的 26 件舊物,做成「像展示架」的網頁。Landing 是單件物品的海報,點開成左頁(物件)右頁(故事)的書頁,另有一頁縮圖總覽(Index)。參照書:EO BOOKS《選物 General Selection》。
+Edmonton + Toronto 挖到的 23 件舊物,做成「像展示架」的網頁。Landing 是單件物品的海報,點開成左頁(物件)右頁(故事)的書頁,另有一頁縮圖總覽(Index)。參照書:EO BOOKS《選物 General Selection》。
 
 ## 已鎖定的決定(Adam)
 
@@ -12,7 +12,7 @@ Edmonton + Toronto 挖到的 26 件舊物,做成「像展示架」的網頁。La
 | --- | --- |
 | 方向 | A:Index(整座架子)+ Spread(拿起一件) |
 | 拍攝視角 | 全部俯視定裝照 |
-| 3D | 26 件全做。17 件走 Meshy / 既有模型,9 件平面件本地生成 |
+| 3D | 23 件全做。14 件走 Meshy / 既有模型,9 件平面件本地生成。03+04、05+06、21+22 三組各併成一件(Adam 2026-10-22),保留較小編號,另一個記在 `aliases` |
 | 底版 | 淺灰 #F3F3F3(參考圖),白頁上內縮 |
 | 內文 | 句首大寫;標籤、標題、編號全大寫 |
 | 字體 | JetBrains Mono 300/400 |
@@ -26,7 +26,7 @@ Edmonton + Toronto 挖到的 26 件舊物,做成「像展示架」的網頁。La
 
 - Repo:https://github.com/LIUYUTSO/A-Antique,PR #1(draft,分支 `meshy-pipeline`)。**main 目前只有初始 commit,本檔與 pipeline 都在分支上,新 session 要先切到 `meshy-pipeline` 或先合併 PR #1。**
 - Mood board(Rev. 4):https://claude.ai/artifact/SViKmxjU9FzDE713uYxw22,原始碼 `design/moodboard.html`
-- 盤點清單(共用資料庫,26 件):https://claude.ai/artifact/PCXc3rRWTtpiBQPiTLN8AB。用 Artifact 工具 `ArtifactData`(collection `objects`,doc id `001` 到 `026`)讀寫。
+- 盤點清單(共用資料庫,23 件):https://claude.ai/artifact/PCXc3rRWTtpiBQPiTLN8AB。用 Artifact 工具 `ArtifactData`(collection `objects`,doc id `001` 到 `026`,缺 004、006、022(已併入 003、005、021))讀寫。
 - A-Brain PR #67(🧽📶「技術棧寫成固定與可替換矛盾」):**已由 Adam 取消並關閉**(他決定維持固定棧)。正本裡「固定」與「可替換」兩種說法並存仍是事實,但 Adam 沒有要處理。
 - 舊專案 A-Stuff:https://github.com/LIUYUTSO/A-Stuff。裡面**沒有 Meshy**,只有 StableFast3D 本地腳本、`gltf-transform` 壓縮、R2 上傳。
 
@@ -39,13 +39,13 @@ Edmonton + Toronto 挖到的 26 件舊物,做成「像展示架」的網頁。La
 ## 模型現況
 
 - Adam 的部分模型是在 Meshy 網頁版(SaaS)建的,**API 列不出來**(他之前試過)。要用,必須由 Adam 匯出 GLB 再交給我們。
-- 點數:Adam 回報剩 774。Meshy 件帶貼圖 30 點,17 件最多 510 點。
+- 點數:Adam 回報剩 774。Meshy 件帶貼圖 30 點,14 件最多 420 點。
 - **尚未產生任何模型,尚未用真實 key 呼叫過 Meshy**(只有 dry-run 和 mock server 測試)。Adam 說「先不產模型,先計劃再執行」。
 
 ## 待執行計畫:匯入既有模型(未開工)
 
 1. **盤點(唯讀)**:對每個 GLB 回報大小、面數、貼圖數與解析度、尺寸、原點與朝向、是否 PBR、是否已 Draco。
-2. **對照 26 件**:在盤點清單頁把已有模型的物件標 `SAAS: HAVE`,清單 `method` 可加 `existing`。重算 Meshy 要跑的件數與點數。
+2. **對照 23 件**:在盤點清單頁把已有模型的物件標 `SAAS: HAVE`,清單 `method` 可加 `existing`。重算 Meshy 要跑的件數與點數。
 3. **統一規格**:單位公尺、Y 軸朝上、原點在底面中心、正面朝 +Z、依 `sizeMm` 縮放、面數 ≤ 3 萬、貼圖 1024 WebP、Draco。不符的轉正,不改外觀。
 4. **傳 R2**:`models/<id>.glb`、`thumbnails/<id>.png`。
 5. **剩下沒模型的件**才送 Meshy,送出前先給 Adam 新的點數明細,等他說開始。
@@ -54,7 +54,7 @@ Edmonton + Toronto 挖到的 26 件舊物,做成「像展示架」的網頁。La
 
 ## 網站骨架(已搭,Next.js)
 
-- 頁面:`/`(Landing,海報式單件)、`/shelf`(Index 縮圖總覽)、`/objects/<id>`(書頁,26 頁),全部靜態預先生成,未知 id 回 404。
+- 頁面:`/`(Landing,海報式單件)、`/shelf`(Index 縮圖總覽)、`/objects/<id>`(書頁,23 頁),全部靜態預先生成,未知 id 回 404。
 - 資料:`src/lib/objects.ts` 用 Zod 驗證 `data/objects.json`;故事在 `content/stories/<id>.md`(目前只有 012,草稿)。
 - 動效:Lenis 接 GSAP ticker;右頁區塊用 GSAP 淡入(expo/power3,500ms)。
 - 預留 `listing`(狀態、價格)欄位給之後的 yard sale,目前不渲染。
@@ -67,7 +67,7 @@ Edmonton + Toronto 挖到的 26 件舊物,做成「像展示架」的網頁。La
 ```
 scripts/meshy/   client.mjs(API、balance、輪詢)、pipeline.mjs(計畫、狀態、下載、壓縮、R2)、run.mjs(CLI)
 scripts/flat/    flat.mjs(薄板 GLB 生成)、build.mjs(CLI)
-data/objects.json  26 件清單;method: meshy | flat;flat 件有 kind、sizeMm
+data/objects.json  23 件清單;method: meshy | flat;flat 件有 kind、sizeMm
 design/          moodboard.html、kodak.png(暫代去背圖)、dig-photo.jpg(原照)
 ```
 
